@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Kontaktanfragen{% endblock %}
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+<script src="{{ url_for('static', filename='js/admin.js') }}" defer></script>
+
+<div class="container mt-4">
+  <a href="{{ url_for('admin.dashboard') }}" class="back-btn">← Zurück zum Dashboard</a>
+  <h2 class="page-title">📬 Kontaktanfragen</h2>
+  <hr>
+
+  {% if messages %}
+    <div class="message-grid">
+      {% for msg in messages %}
+      <div class="message-card" onclick="window.location.href='{{ url_for('admin.contact_detail', message_id=msg.id) }}'">
+        <div class="message-header">
+          <div>
+            <h5>{{ msg.name }}</h5>
+            <p class="email">{{ msg.email }}</p>
+          </div>
+          <small class="timestamp">{{ msg.created_at.strftime('%d.%m.%Y %H:%M') if msg.created_at else '' }}</small>
+        </div>
+        <p class="message-text">{{ msg.message|truncate(120) }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="no-data">Keine Kontaktanfragen vorhanden.</p>
+  {% endif %}
+</div>
+
+{% endblock %}

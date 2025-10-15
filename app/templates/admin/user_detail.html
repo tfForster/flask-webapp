@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Benutzer – {{ user.username }}{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+<script src="{{ url_for('static', filename='js/admin.js') }}" defer></script>
+
+<div class="container mt-4">
+  <a href="{{ url_for('admin.users') }}" class="back-btn">← Zurück</a>
+
+  <div class="detail-card">
+    <h2>👤 Benutzer bearbeiten</h2>
+
+    <form method="POST" class="mb-4">
+      <div class="mb-3">
+        <label for="username" class="form-label">Benutzername</label>
+        <input type="text" id="username" name="username" class="form-control" value="{{ user.username }}">
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">E-Mail</label>
+        <input type="email" id="email" name="email" class="form-control" value="{{ user.email }}">
+      </div>
+
+      <button type="submit" class="btn btn-primary">Änderungen speichern</button>
+    </form>
+
+    <hr>
+
+    <p><strong>Rolle:</strong>
+      {% if user.role == "admin" %}
+        <span class="badge bg-danger">Admin</span>
+      {% else %}
+        <span class="badge bg-secondary">User</span>
+      {% endif %}
+    </p>
+
+    <div class="actions mt-3">
+      <a href="{{ url_for('admin.toggle_role', user_id=user.id) }}" class="btn btn-secondary">🔁 Rolle wechseln</a>
+      <a href="{{ url_for('admin.delete_user', user_id=user.id) }}" class="btn btn-danger"
+         onclick="return confirm('Diesen Benutzer wirklich löschen?')">🗑️ Löschen</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

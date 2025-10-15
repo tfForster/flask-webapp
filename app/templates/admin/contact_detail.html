@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Kontaktanfrage – {{ message.name }}{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+<script src="{{ url_for('static', filename='js/admin.js') }}" defer></script>
+
+<div class="container mt-4">
+  <a href="{{ url_for('admin.contact_requests') }}" class="back-btn">← Zurück</a>
+
+  <div class="detail-card">
+    <h2>📬 Anfrage von {{ message.name }}</h2>
+    <p><strong>Email:</strong> <a href="mailto:{{ message.email }}">{{ message.email }}</a></p>
+    {% if message.phone %}
+      <p><strong>Telefon:</strong> {{ message.phone }}</p>
+    {% endif %}
+    <p><strong>Gesendet am:</strong> {{ message.created_at.strftime('%d.%m.%Y %H:%M') if message.created_at else '-' }}</p>
+
+    <hr>
+    <p class="message-content">{{ message.message }}</p>
+
+    <div class="actions">
+      <a href="{{ url_for('admin.delete_contact_request', message_id=message.id) }}"
+         class="btn btn-danger"
+         onclick="return confirm('Diese Nachricht wirklich löschen?')">🗑️ Löschen</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

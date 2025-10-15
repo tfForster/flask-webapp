@@ -1,0 +1,15 @@
+<!-- templates/about.html -->
+{% extends "base.html" %}
+
+{% block title %}Über mich{% endblock %}
+
+{% block content %}
+    <p>Ich bin Benno, 20 Jahre alt, Fachinformatiker für Anwendungsentwicklung ...</p>
+    <p>Ich interessiere mich für Webentwicklung, Java, Python und möchte meine Projekte hier präsentieren.</p>
+    <div class="card p-4 shadow-sm">
+        <img src="{{ url_for('static', filename='img/me.jpg') }}" class="rounded-circle mb-3" width="150">
+        <h3>Benno Klan</h3>
+        <p>Fachinformatiker für Anwendungsentwicklung – Web & Software Projects</p>
+    </div>
+
+{% endblock %}

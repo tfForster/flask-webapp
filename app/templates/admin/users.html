@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Benutzerverwaltung{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <a href="{{ url_for('admin.dashboard') }}" class="back-btn">← Zurück zum Dashboard</a>
+  <h2>Benutzerverwaltung</h2>
+  <hr>
+  <table class="table table-hover align-middle">
+    <thead class="table-light">
+      <tr>
+        <th>ID</th>
+        <th>Benutzername</th>
+        <th>Email</th>
+        <th>Rolle</th>
+        <th>Aktionen</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+      <tr onclick="window.location.href='{{ url_for('admin.user_detail', user_id=user.id) }}'" style="cursor: pointer;">
+        <td>{{ user.id }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.email }}</td>
+        <td>
+          {% if user.role == "admin" %}
+            <span class="badge bg-danger">Admin</span>
+          {% else %}
+            <span class="badge bg-secondary">User</span>
+          {% endif %}
+        </td>
+        <td onclick="event.stopPropagation();">
+          <a href="{{ url_for('admin.toggle_role', user_id=user.id) }}" class="btn btn-sm btn-warning">Rolle ändern</a>
+          <a href="{{ url_for('admin.delete_user', user_id=user.id) }}" class="btn btn-sm btn-danger"
+            onclick="return confirm('Diesen Benutzer wirklich löschen?')">Löschen</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+<script src="{{ url_for('static', filename='js/admin.js') }}" defer></script>
+
+{% endblock %}

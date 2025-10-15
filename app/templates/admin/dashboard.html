@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="admin-dashboard">
+  <h1>👋 Willkommen, {{ current_user.username }}!</h1>
+  <div class="stats-grid">
+
+  <div class="stat-card" onclick="location.href='{{ url_for('admin.users') }}'">
+    <div class="icon">👤</div>
+    <div class="info">
+      <h3>Benutzer</h3>
+      <p id="user-count">{{ user_count }}</p>
+    </div>
+  </div>
+
+
+    <div class="stat-card" onclick="location.href='{{ url_for('admin.contact_requests') }}'">
+      <div class="icon">💬</div>
+      <div class="info">
+        <h3>Kontaktanfragen</h3>
+        <p id="message-count">{{ message_count }}</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+<script src="{{ url_for('static', filename='js/admin.js') }}" defer></script>
+
+{% endblock %}

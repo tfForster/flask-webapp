@@ -1,0 +1,45 @@
+<!-- templates/widgets/navbar.html -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="{{ url_for('main.home') }}">Mein Portfolio</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('projects.projects_page') }}">Projekte</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('about.about_page') }}">Über mich</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('contact.contact_page') }}">Kontakt</a></li>
+
+        <!-- 🔽 User Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button"
+             data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-person-circle me-1" style="font-size: 1.3rem;"></i>
+            {% if current_user.is_authenticated %}
+              {{ current_user.username }}
+            {% else %}
+              Konto
+            {% endif %}
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            {% if current_user.is_authenticated %}
+              <li><a class="dropdown-item" href="{{ url_for('auth.account') }}">Mein Konto</a></li>
+              {% if current_user.is_admin() %}
+                <li><a class="dropdown-item" href="{{ url_for('admin.dashboard') }}">Admin Dashboard</a></li>
+              {% endif %}
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger" href="{{ url_for('auth.logout') }}">Logout</a></li>
+            {% else %}
+              <li><a class="dropdown-item" href="{{ url_for('auth.login') }}">Login</a></li>
+              <li><a class="dropdown-item" href="{{ url_for('auth.register') }}">Registrieren</a></li>
+            {% endif %}
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

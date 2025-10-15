@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Mein Konto{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="card shadow-sm mx-auto" style="max-width: 500px;">
+    <div class="card-body text-center">
+      <h2 class="mb-3">Mein Konto</h2>
+      <p class="text-muted">Angemeldet als <strong>{{ user.username }}</strong></p>
+      <hr>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+      <p><strong>Rolle:</strong> {{ user.role }}</p>
+      <hr>
+      <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-danger">Abmelden</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

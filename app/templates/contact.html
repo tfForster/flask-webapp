@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Kontakt – Mein Portfolio{% endblock %}
+
+{% block content %}
+<h1>Kontakt</h1>
+<p>Schreib mir eine Nachricht:</p>
+
+<!-- Flash Messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }} mt-3" role="alert">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<form method="POST" action="{{ url_for('contact.contact_page') }}" class="mt-4">
+  <div class="mb-3">
+    <label for="name" class="form-label">Name</label>
+    <input type="text" class="form-control" id="name" name="name" required>
+  </div>
+
+  <div class="mb-3">
+    <label for="email" class="form-label">E-Mail</label>
+    <input type="email" class="form-control" id="email" name="email" required>
+  </div>
+
+  <div class="mb-3">
+    <label for="message" class="form-label">Nachricht</label>
+    <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Senden</button>
+</form>
+{% endblock %}
