@@ -1,17 +1,68 @@
 {% extends "base.html" %}
+{% block title %}Projekte{% endblock %}
+
 {% block content %}
-<h1 class="mb-4">Meine Projekte</h1>
-<div class="row">
-  {% for p in projects %}
-  <div class="col-md-4 mb-3">
-    <div class="card h-100 shadow-sm">
-      <div class="card-body">
-        <h5 class="card-title">{{ p.title }}</h5>
-        <p class="card-text">{{ p.desc }}</p>
-        <span class="badge bg-secondary">{{ p.tech }}</span>
-      </div>
+<div class="container py-5">
+  <h2 class="fw-semibold mb-4 text-center">Meine Projekte</h2>
+
+  <div class="row g-4">
+    {% for project in projects %}
+    <div class="col-md-4">
+      <a href="{{ url_for('projects.project_detail', project_id=project.id) }}" class="project-link">
+        <div class="card project-card border-0 shadow-lg rounded-4 h-100">
+          {% if project.image %}
+          <img src="{{ url_for('static', filename='uploads/' ~ project.image) }}"
+               class="card-img-top rounded-top-4" alt="{{ project.title }}">
+          {% else %}
+          <div class="card-img-top bg-light rounded-top-4 d-flex align-items-center justify-content-center" style="height:200px;">
+            <span class="text-muted">Kein Bild</span>
+          </div>
+          {% endif %}
+
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title fw-semibold mb-2">{{ project.title }}</h5>
+
+            {% if project.tech_stack %}
+            <div class="mb-3">
+              {% for tech in project.tech_stack.split(',') %}
+              <span class="badge bg-secondary me-1">{{ tech.strip() }}</span>
+              {% endfor %}
+            </div>
+            {% endif %}
+
+            <p class="card-text text-muted flex-grow-1">
+              {{ project.short_description or project.description[:100] ~ '...' }}
+            </p>
+          </div>
+        </div>
+      </a>
     </div>
+    {% endfor %}
   </div>
-  {% endfor %}
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // Wähle alle project-card Elemente
+  const cards = document.querySelectorAll(".project-card");
+
+  if ('IntersectionObserver' in window && cards.length > 0) {
+    const observer = new IntersectionObserver((entries, observerRef) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+          observerRef.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    cards.forEach(card => observer.observe(card));
+  } else {
+    // Fallback: zeige alle sofort (keine Animation)
+    cards.forEach(card => card.classList.add("show"));
+  }
+});
+</script>
 {% endblock %}

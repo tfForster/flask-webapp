@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Projekt bearbeiten' if project else 'Neues Projekt' }}{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <a href="{{ url_for('admin.admin_projects') }}" class="btn btn-outline-secondary mb-3">← Zurück</a>
+  <h2>{{ 'Projekt bearbeiten' if project else 'Neues Projekt hinzufügen' }}</h2>
+
+  <form method="POST" class="mt-3" enctype="multipart/form-data">
+    <div class="mb-3">
+      <label for="title" class="form-label">Titel</label>
+      <input type="text" class="form-control" id="title" name="title"
+             value="{{ project.title if project else '' }}" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="form-label">Beschreibung</label>
+      <textarea class="form-control" id="description" name="description" rows="3" required>{{ project.description if project else '' }}</textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="image" class="form-label">Projektbild (optional)</label>
+      {% if project and project.image %}
+        <div class="mb-2">
+          <img src="{{ url_for('static', filename='uploads/' ~ project.image) }}" alt="Projektbild"
+               style="max-width: 200px; border-radius: 8px;">
+        </div>
+      {% endif %}
+      <input type="file" class="form-control" id="image" name="image" accept="image/*">
+    </div>
+
+    <div class="mb-3">
+      <label for="tech_stack" class="form-label">Tech Stack</label>
+      <input type="text" class="form-control" id="tech_stack" name="tech_stack"
+             value="{{ project.tech_stack if project else '' }}"
+             placeholder="z. B. Flask, Bootstrap, SQLite">
+    </div>
+
+    <div class="mb-3">
+      <label for="github_url" class="form-label">GitHub-Link</label>
+      <input type="url" class="form-control" id="github_url" name="github_url"
+             value="{{ project.github_url if project else '' }}"
+             placeholder="https://github.com/...">
+    </div>
+
+    <div class="mb-3">
+      <label for="live_url" class="form-label">Live Preview URL (optional)</label>
+      <input type="url" class="form-control" id="live_url" name="live_url"
+             value="{{ project.live_url if project else '' }}"
+             placeholder="https://meine-seite.de/project">
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+      {{ 'Änderungen speichern' if project else 'Projekt speichern' }}
+    </button>
+  </form>
+</div>
+{% endblock %}

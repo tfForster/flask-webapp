@@ -2,8 +2,10 @@ from flask import Blueprint, render_template, redirect, url_for, flash, abort, r
 from flask_login import login_required, current_user
 from app import db
 from app.models.user import User
-from app.models.database_models import ContactMessage
-from flask import jsonify
+from app.models.database_models import ContactMessage, Project
+import os, uuid
+from werkzeug.utils import secure_filename
+from flask import jsonify, current_app
 
 admin_bp = Blueprint("admin", __name__, url_prefix="/admin")
 
@@ -17,7 +19,8 @@ def restrict_to_admins():
 def dashboard():
     user_count = User.query.count()
     message_count = ContactMessage.query.count()
-    return render_template("admin/dashboard.html", user_count=user_count, message_count=message_count)
+    project_count = Project.query.count()
+    return render_template("admin/dashboard.html", user_count=user_count, message_count=message_count, project_count=project_count)
 
 @admin_bp.route("/users")
 @login_required
@@ -76,7 +79,7 @@ def delete_contact_request(message_id):
     db.session.delete(msg)
     db.session.commit()
     flash("Nachricht gelöscht.","success")
-    return redirect(url_for("admin.contacts"))
+    return redirect(url_for("admin.stats"))
 
 # cotacts detail page
 @admin_bp.route("/contact/<int:message_id>")
@@ -92,8 +95,79 @@ def contact_detail(message_id):
 def stats():
     user_count = User.query.count()
     message_count = ContactMessage.query.count()
+    project_count = Project.query.count()
     return jsonify({
         "user_count": user_count,
-        "message_count": message_count
+        "message_count": message_count,
+        "project_count": project_count
     })
 
+
+# projects pages
+@admin_bp.route("/projects")
+@login_required
+def admin_projects():
+    projects = Project.query.all()
+    return render_template("admin/projects.html", projects=projects)
+
+@admin_bp.route("/project/new", methods=["GET", "POST"])
+@login_required
+def new_project():
+    if request.method == "POST":
+        title = request.form["title"]
+        desc = request.form["description"]
+        tech = request.form["tech_stack"]
+        github = request.form["github_url"]
+        live = request.form["live_url"]
+
+        # Bildverarbeitung
+        image_file = request.files.get("image")
+        image_filename = None
+        if image_file and allowed_file(image_file.filename):
+            ext = image_file.filename.rsplit('.', 1)[1].lower()
+            filename = f"{uuid.uuid4().hex}.{ext}"  # eindeutiger Name
+            image_path = os.path.join(current_app.config["UPLOAD_FOLDER"], filename)
+            image_file.save(image_path)
+            image_filename = filename
+
+        project = Project(
+            title=title,
+            description=desc,
+            tech_stack=tech,
+            github_url=github,
+            live_url=live,
+            image=image_filename
+        )
+        db.session.add(project)
+        db.session.commit()
+        return redirect(url_for("admin.admin_projects"))
+
+    return render_template("admin/project_form.html")
+
+
+@admin_bp.route("/project/edit/<int:project_id>", methods=["GET", "POST"])
+@login_required
+def edit_project(project_id):
+    project = Project.query.get_or_404(project_id)
+    if request.method == "POST":
+        project.title = request.form["title"]
+        project.description = request.form["description"]
+        project.tech_stack = request.form["tech_stack"]
+        project.github_url = request.form["github_url"]
+        project.live_url = request.form["live_url"]
+        db.session.commit()
+        return redirect(url_for("admin.admin_projects"))
+    return render_template("admin/project_form.html", project=project)
+
+
+@admin_bp.route("/project/delete/<int:project_id>", methods=["POST"])
+@login_required
+def delete_project(project_id):
+    project = Project.query.get_or_404(project_id)
+    db.session.delete(project)
+    db.session.commit()
+    return redirect(url_for("admin.admin_projects"))
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in current_app.config['ALLOWED_EXTENSIONS']

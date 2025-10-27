@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+  <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+    <div class="row g-0">
+      <!-- Linke Seite -->
+      <div class="col-md-7 p-5 d-flex flex-column justify-content-center">
+        <h1 class="fw-bold mb-3">{{ project.title }}</h1>
+
+        {% if project.tech_stack %}
+        <div class="mb-3">
+          {% for tech in project.tech_stack.split(',') %}
+            <span class="badge bg-secondary me-1">{{ tech.strip() }}</span>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if project.description %}
+          <p class="mb-4 text-secondary" style="line-height:1.8;">{{ project.description }}</p>
+        {% endif %}
+
+        <!-- Buttons -->
+        <div class="d-flex flex-wrap gap-2 mt-3">
+          {% if project.github_url %}
+            <a href="{{ project.github_url }}" target="_blank" class="btn btn-dark">
+              <i class="bi bi-github me-1"></i> GitHub
+            </a>
+          {% endif %}
+          {% if project.live_url %}
+            <a href="{{ project.live_url }}" target="_blank" class="btn btn-primary">
+                <i class="bi bi-box-arrow-up-right me-1"></i> Live ansehen
+            </a>
+          {% endif %}
+        </div>
+
+        <!-- Zurück -->
+        <div class="mt-4">
+          <a href="{{ url_for('projects.projects_page') }}" class="btn btn-outline-secondary rounded-pill px-4">
+            ← Zurück
+          </a>
+        </div>
+      </div>
+
+      <!-- Rechte Seite (Bild oder Platzhalter) -->
+      <div class="col-md-5">
+        {% if project.image %}
+          <img src="{{ url_for('static', filename='uploads/' ~ project.image) }}" 
+               class="img-fluid rounded-end" 
+               alt="{{ project.title }}">
+        {% else %}
+          <div class="bg-light-subtle h-100 d-flex align-items-center justify-content-center text-muted"
+               style="background-color: #f8f9fa;">
+            <i class="bi bi-image fs-1"></i>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

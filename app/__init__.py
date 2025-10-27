@@ -1,12 +1,14 @@
+import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_migrate import Migrate
 
 db = SQLAlchemy()
 login_manager = LoginManager()
 login_manager.login_view = "auth.login"
 
-from flask_login import LoginManager
+migrate = Migrate()
 
 
 def create_app():
@@ -16,9 +18,16 @@ def create_app():
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.secret_key = "supergeheimespasswort"  # für flash() & Sessions
 
+    app.config["UPLOAD_FOLDER"] = os.path.join(app.root_path, "static/uploads")
+    app.config["MAX_CONTENT_LENGTH"] = 2 * 1024 * 1024  # 2MB Limit
+    app.config["ALLOWED_EXTENSIONS"] = {"png", "jpg", "jpeg", "gif", "webp"}
+    os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
+
     db.init_app(app)
     login_manager.init_app(app)
-    from app.models import database_models  # 🔥 sorgt dafür, dass SQLAlchemy alle Models kennt
+    migrate.init_app(app, db)
+
+    from app.models import database_models  # dass SQLAlchemy alle Models kennt
 
     from app.models.user import User
     @login_manager.user_loader

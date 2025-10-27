@@ -6,14 +6,13 @@
   <h1>👋 Willkommen, {{ current_user.username }}!</h1>
   <div class="stats-grid">
 
-  <div class="stat-card" onclick="location.href='{{ url_for('admin.users') }}'">
-    <div class="icon">👤</div>
-    <div class="info">
-      <h3>Benutzer</h3>
-      <p id="user-count">{{ user_count }}</p>
+    <div class="stat-card" onclick="location.href='{{ url_for('admin.users') }}'">
+      <div class="icon">👤</div>
+      <div class="info">
+        <h3>Benutzer</h3>
+        <p id="user-count">{{ user_count }}</p>
+      </div>
     </div>
-  </div>
-
 
     <div class="stat-card" onclick="location.href='{{ url_for('admin.contact_requests') }}'">
       <div class="icon">💬</div>
@@ -23,10 +22,17 @@
       </div>
     </div>
 
+    <div class="stat-card" onclick="location.href='{{ url_for('admin.admin_projects') }}'">
+      <div class="icon">🧱</div>
+      <div class="info">
+        <h3>Projekte</h3>
+        <p id="project-count">{{ project_count }}</p>
+      </div>
+    </div>
+
   </div>
 </div>
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
 <script src="{{ url_for('static', filename='js/admin.js') }}" defer></script>
-
 {% endblock %}
