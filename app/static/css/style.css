@@ -81,3 +81,60 @@ body {
   max-width: 600px;
   margin: 0 auto;
 }
+
+/* ---- Toast Styling Upgrade ---- */
+
+.toast {
+  border-radius: 0.75rem !important;
+  backdrop-filter: blur(6px);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  border: none !important;
+  overflow: hidden;
+}
+
+/* Erfolgreiche Aktionen */
+.toast.text-bg-success {
+  background: linear-gradient(135deg, #28a745, #218838);
+}
+
+/* Fehler */
+.toast.text-bg-danger {
+  background: linear-gradient(135deg, #dc3545, #b02a37);
+}
+
+/* Info */
+.toast.text-bg-info {
+  background: linear-gradient(135deg, #17a2b8, #138496);
+}
+
+/* Warnungen */
+.toast.text-bg-warning {
+  background: linear-gradient(135deg, #ffc107, #e0a800);
+  color: #212529; /* Dunkler Text für Lesbarkeit */
+}
+
+/* Close Button für helle & dunkle Varianten */
+.toast .btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+  opacity: 0.8;
+}
+.toast .btn-close:hover {
+  opacity: 1;
+}
+
+/* Animation beim Erscheinen */
+.toast.show {
+  animation: toast-slide-in 0.3s ease;
+}
+
+@keyframes toast-slide-in {
+  from {
+    transform: translateX(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

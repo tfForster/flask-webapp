@@ -24,7 +24,7 @@ def contact_page():
 
 
             
-            flash("nachricht erfolgreich gesendet! Vielen Dank :)", "success")
+            flash("Nachricht erfolgreich gesendet! Vielen Dank :)", "success")
             return redirect(url_for("contact.contact_page"))
         
-    return render_template("contact.html")
+    return render_template("contact.html", show_toasts=False)

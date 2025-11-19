@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, abort, request
+from flask import Blueprint, render_template, redirect, url_for, flash, abort, request, session
 from flask_login import login_required, current_user
 from app import db
 from app.models.user import User
@@ -79,7 +79,7 @@ def delete_contact_request(message_id):
     db.session.delete(msg)
     db.session.commit()
     flash("Nachricht gelöscht.","success")
-    return redirect(url_for("admin.stats"))
+    return redirect(url_for("admin.contact_requests"))
 
 # cotacts detail page
 @admin_bp.route("/contact/<int:message_id>")
@@ -107,8 +107,13 @@ def stats():
 @admin_bp.route("/projects")
 @login_required
 def admin_projects():
-    projects = Project.query.all()
-    return render_template("admin/projects.html", projects=projects)
+    sort = request.args.get("sort", "newest")  # default: newest
+    if sort == "oldest":
+        projects = Project.query.order_by(Project.id.asc()).all()
+    else:
+        projects = Project.query.order_by(Project.id.desc()).all()
+    return render_template("admin/projects.html", projects=projects, sort=sort)
+
 
 @admin_bp.route("/project/new", methods=["GET", "POST"])
 @login_required
@@ -149,15 +154,41 @@ def new_project():
 @login_required
 def edit_project(project_id):
     project = Project.query.get_or_404(project_id)
+
     if request.method == "POST":
+        # Textfelder übernehmen
         project.title = request.form["title"]
         project.description = request.form["description"]
         project.tech_stack = request.form["tech_stack"]
         project.github_url = request.form["github_url"]
         project.live_url = request.form["live_url"]
+
+        # === BILDDATEI HANDLING ===
+        if "image" in request.files:
+            file = request.files["image"]
+
+            # Wenn ein neues Bild gewählt wurde
+            if file and file.filename.strip() != "":
+                filename = secure_filename(file.filename)
+                upload_folder = os.path.join(current_app.static_folder, "uploads")
+
+                # Ordner erstellen falls nicht vorhanden
+                os.makedirs(upload_folder, exist_ok=True)
+
+                # Datei speichern
+                file_path = os.path.join(upload_folder, filename)
+                file.save(file_path)
+
+                # Dateiname in DB speichern
+                project.image = filename
+
+        # Änderungen speichern
         db.session.commit()
-        return redirect(url_for("admin.admin_projects"))
+
+        return redirect(url_for("admin.edit_project", project_id=project.id))
+
     return render_template("admin/project_form.html", project=project)
+
 
 
 @admin_bp.route("/project/delete/<int:project_id>", methods=["POST"])
@@ -166,6 +197,14 @@ def delete_project(project_id):
     project = Project.query.get_or_404(project_id)
     db.session.delete(project)
     db.session.commit()
+    return redirect(url_for("admin.admin_projects"))
+
+@admin_bp.route("/projects/sort", methods=["POST"])
+@login_required
+def set_project_sort():
+    sort = request.form.get("sort", "newest")
+    session["project_sort"] = sort  # für die öffentliche Seite speichern
+    flash("Sortierung aktualisiert.", "success")
     return redirect(url_for("admin.admin_projects"))
 
 def allowed_file(filename):

@@ -17,3 +17,4 @@ class Project(db.Model):
     live_url = db.Column(db.String(200))
     image = db.Column(db.String(200))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    order = db.Column(db.Integer, default=0)

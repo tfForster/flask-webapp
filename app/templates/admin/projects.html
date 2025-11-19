@@ -8,6 +8,14 @@
     <a href="{{ url_for('admin.new_project') }}" class="btn btn-primary">+ Neues Projekt</a>
   </div>
 
+  <form method="post" action="{{ url_for('admin.set_project_sort') }}" class="d-inline-block mb-3">
+    <select name="sort" class="form-select form-select-sm" onchange="this.form.submit()">
+      <option value="newest" {% if session.get('project_sort', 'newest') == 'newest' %}selected{% endif %}>Neueste zuerst</option>
+      <option value="oldest" {% if session.get('project_sort') == 'oldest' %}selected{% endif %}>Älteste zuerst</option>
+    </select>
+  </form>
+
+
   {% if projects %}
   <div class="row">
     {% for project in projects %}
