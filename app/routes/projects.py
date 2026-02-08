@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, session
-from app.models.database_models import Project
+from app.models.project import Project
 
 projects = Blueprint("projects", __name__)
 

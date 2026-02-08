@@ -15,8 +15,11 @@
         </div>
         {% endif %}
 
-        {% if project.description %}
-          <p class="mb-4 text-secondary" style="line-height:1.8;">{{ project.description }}</p>
+        <!-- kurze Beschreibung (Teaser) -->
+        {% if project.short_description %}
+        <p class="mb-4 text-secondary" style="line-height:1.7;">
+            {{ project.short_description }}
+        </p>
         {% endif %}
 
         <!-- Buttons -->
@@ -57,4 +60,21 @@
     </div>
   </div>
 </div>
+
+<!-- ===================== -->
+<!-- DETAIL / LANGTEXT -->
+<!-- ===================== -->
+{% if project.description %}
+<div class="container pb-5">
+  <div class="card border-0 shadow-lg rounded-4 p-5">
+    <h3 class="fw-bold mb-3">Über das Projekt</h3>
+
+    <p class="text-secondary" style="line-height:1.9;">
+      {{ project.description }}
+    </p>
+  </div>
+</div>
+{% endif %}
+
 {% endblock %}
+

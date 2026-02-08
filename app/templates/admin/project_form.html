@@ -13,6 +13,20 @@
     </div>
 
     <div class="mb-3">
+      <label for="short_description" class="form-label">Kurzbeschreibung</label>
+      <input
+        type="text"
+        class="form-control"
+        id="short_description"
+        name="short_description"
+        maxlength="120"
+        value="{{ project.short_description if project else '' }}"
+        placeholder="Kurzer Teaser (z. B. für Karten / Vorschau)"
+        required
+      >
+    </div>
+
+    <div class="mb-3">
       <label for="description" class="form-label">Beschreibung</label>
       <textarea class="form-control" id="description" name="description" rows="3" required>{{ project.description if project else '' }}</textarea>
     </div>

@@ -14,7 +14,7 @@ migrate = Migrate()
 def create_app():
     app = Flask(__name__)
 
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
+    app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:@localhost:3307/flaskwebapp"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.secret_key = "supergeheimespasswort"  # für flash() & Sessions
 
@@ -27,7 +27,7 @@ def create_app():
     login_manager.init_app(app)
     migrate.init_app(app, db)
 
-    from app.models import database_models  # dass SQLAlchemy alle Models kennt
+    from app.models import User, Project, ContactMessage
 
     from app.models.user import User
     @login_manager.user_loader
