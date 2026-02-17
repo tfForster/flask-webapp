@@ -3,6 +3,8 @@ from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_migrate import Migrate
+from dotenv import load_dotenv
+load_dotenv()
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -14,9 +16,17 @@ migrate = Migrate()
 def create_app():
     app = Flask(__name__)
 
-    app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:@localhost:3307/flaskwebapp"
+    # app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv(
+        "DATABASE_URL",
+        "mysql+pymysql://root:@localhost:3307/flaskwebapp"
+    )
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    app.secret_key = "supergeheimespasswort"  # für flash() & Sessions
+    # app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
+    app.config["SECRET_KEY"] = os.getenv(
+        "SECRET_KEY",
+        "dev-secret-key"
+    )
 
     app.config["UPLOAD_FOLDER"] = os.path.join(app.root_path, "static/uploads")
     app.config["MAX_CONTENT_LENGTH"] = 2 * 1024 * 1024  # 2MB Limit
