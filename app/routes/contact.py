@@ -5,7 +5,7 @@ contact = Blueprint("contact", __name__)
 @contact.route("/", methods=["GET", "POST"])
 def contact_page():
     from app import db
-    from app.models.database_models import ContactMessage
+    from app.models.contact_message import ContactMessage
 
 
     if request.method == "POST":
