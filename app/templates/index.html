@@ -24,30 +24,37 @@
 const roles = ["Benno👋", "Softwareentwickler", "Data Scientist"];
 let count = 0;
 let index = 0;
-let currentText = "";
 let isDeleting = false;
 
 (function typeRole() {
   const nameEl = document.getElementById("typed-name");
-
-  if(count === roles.length) count = 0;
-  currentText = roles[count];
+  const currentText = roles[count];
 
   if(!isDeleting){
-    nameEl.textContent = currentText.slice(0, ++index);
-  } else {
-    nameEl.textContent = currentText.slice(0, index--);
-  }
-
-  if(!isDeleting && index === currentText.length){
-    isDeleting = true;
-    setTimeout(typeRole, 1500); // 1,5 Sek warten bevor gelöscht wird
-  } else if(isDeleting && index === 0){
-    isDeleting = false;
-    count++;
-    setTimeout(typeRole, 300); // kurze Pause bevor neues Wort
-  } else {
+    // Tippen
+    nameEl.textContent = currentText.slice(0, index + 1);
+    index++;
+    
+    if(index === currentText.length){
+      // Fertig mit Tippen, kurze Pause bevor Löschen
+      isDeleting = true;
+      setTimeout(typeRole, 1500);
+      return;
+    }
     setTimeout(typeRole, 75); // Tippgeschwindigkeit
+  } else {
+    // Löschen
+    nameEl.textContent = currentText.slice(0, index - 1);
+    index--;
+    
+    if(index === 0){
+      // Fertig mit Löschen, nächster Begriff
+      isDeleting = false;
+      count = (count + 1) % roles.length;
+      setTimeout(typeRole, 300); // kurze Pause bevor neues Wort
+      return;
+    }
+    setTimeout(typeRole, 50); // Löschen etwas schneller
   }
 })();
 </script>
