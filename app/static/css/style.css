@@ -138,3 +138,148 @@ body {
     opacity: 1;
   }
 }
+
+/* Hero Section */
+.hero {
+    height: 100vh; /* volle Höhe des Viewports */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #f8f9fa; /* light bg */
+    padding: 0 20px;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: 1.25rem;
+    color: #6c757d;
+    margin-bottom: 2rem;
+}
+
+.hero .btn {
+    margin: 0 0.5rem;
+}
+
+/* Skill Cards */
+.skill-card {
+    border: none;
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff;
+}
+
+.skill-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.skill-icon {
+    color: #0d6efd; /* Bootstrap Primary */
+}
+
+#skills h2 {
+    color: #212529;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+}
+
+/* Abstand zwischen Sections */
+.section-gap {
+    margin-top: 100px; /* Abstand nach oben */
+    margin-bottom: 100px; /* Abstand nach unten, falls nötig */
+}
+
+/* Optional: Hero Section Fullscreen */
+.hero {
+    min-height: 100vh; /* nimmt mindestens die volle Bildschirmhöhe */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    background-color: #f8f9fa; /* wie bg-light */
+}
+
+/* Skill Cards */
+.skill-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.skill-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 25px rgba(0,0,0,0.2);
+}
+
+/* Skill Icons */
+.skill-icon {
+    color: #0d6efd; /* bootstrap primary color */
+}
+
+/* Card */
+.card {
+  transition: all 0.25s ease;
+}
+
+/* Cleaner Hover */
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+}
+
+/* KEIN Zoom mehr */
+.card-img-top {
+  transition: none;
+}/* Card */
+.card {
+  transition: all 0.25s ease;
+}
+
+/* Cleaner Hover */
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+}
+
+/* KEIN Zoom mehr */
+.card-img-top {
+  transition: none;
+}
+
+/* Abstand unter Text */
+.card-text {
+  margin-bottom: 1.5rem;
+}
+
+/* Badge Styling */
+.badge {
+  background: #f1f3f5;
+  border-radius: 0.4rem;
+  padding: 0.4em 0.6em;
+  font-weight: 500;
+  margin: 2px;
+}
+
+.tech-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  background: #f1f3f5;
+  color: #212529;
+
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+
+  margin: 2px;
+}
+
+.tech-badge i {
+  font-size: 0.9rem;
+}

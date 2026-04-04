@@ -4,12 +4,13 @@
 
 {% block content %}
 <!-- Hero Section -->
-<section class="py-5 text-center bg-light">
+<section class="hero position-relative">
   <div class="container">
-    <h1 class="display-4 fw-bold mb-3">Hey, ich bin Benno 👋</h1>
-    <p class="lead text-muted mb-4">
-      Softwareentwickler mit Fokus auf sauberes UI, funktionale Backends und praktische Lösungen.
-    </p>
+    <h1>
+      Hey, ich bin <span id="typed-name">Benno 👋</span>
+      <span class="cursor">|</span>
+    </h1>
+    <p>Softwareentwickler mit Fokus auf sauberes UI, funktionale Backends und praktische Lösungen.</p>
     <a href="{{ url_for('projects.projects_page') }}" class="btn btn-primary btn-lg px-4 me-2">
       Meine Projekte
     </a>
@@ -19,8 +20,54 @@
   </div>
 </section>
 
+<script>
+const roles = ["Benno👋", "Softwareentwickler", "Data Scientist"];
+let count = 0;
+let index = 0;
+let currentText = "";
+let isDeleting = false;
+
+(function typeRole() {
+  const nameEl = document.getElementById("typed-name");
+
+  if(count === roles.length) count = 0;
+  currentText = roles[count];
+
+  if(!isDeleting){
+    nameEl.textContent = currentText.slice(0, ++index);
+  } else {
+    nameEl.textContent = currentText.slice(0, index--);
+  }
+
+  if(!isDeleting && index === currentText.length){
+    isDeleting = true;
+    setTimeout(typeRole, 1500); // 1,5 Sek warten bevor gelöscht wird
+  } else if(isDeleting && index === 0){
+    isDeleting = false;
+    count++;
+    setTimeout(typeRole, 300); // kurze Pause bevor neues Wort
+  } else {
+    setTimeout(typeRole, 75); // Tippgeschwindigkeit
+  }
+})();
+</script>
+
+<style>
+.cursor {
+  display: inline-block;
+  width: 2px;
+  background-color: #000;
+  margin-left: 2px;
+  animation: blink 0.7s infinite;
+}
+@keyframes blink {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0; }
+}
+</style>
+
 <!-- About Section -->
-<section class="py-5">
+<section class="py-5 section-gap">
   <div class="container">
     <div class="row align-items-center">
       <div class="col-md-6">
@@ -40,6 +87,106 @@
     </div>
   </div>
 </section>
+
+<!-- Skills / Tech Stack Section -->
+<section class="py-5 bg-light" id="skills">
+  <div class="container">
+    <h2 class="fw-bold text-center mb-5">Tech Stack & Skills</h2>
+    <div class="row g-4 justify-content-center">
+      
+      <!-- Python & Flask -->
+      <div class="col-md-3 col-sm-6" data-aos="fade-up">
+        <div class="card text-center p-4 shadow-sm skill-card h-100">
+          <i class="fab fa-python fa-3x mb-3 skill-icon"></i>
+          <h5 class="fw-bold">Python & Flask</h5>
+          <p class="text-muted">Webentwicklung, Backend-Logik & kleine Tools.</p>
+        </div>
+      </div>
+
+      <!-- Flutter / Dart -->
+      <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="300">
+        <div class="card text-center p-4 shadow-sm skill-card h-100">
+          <i class="fas fa-mobile-alt fa-3x mb-3 skill-icon"></i>
+          <h5 class="fw-bold">Flutter / Dart</h5>
+          <p class="text-muted">Cross-Plattform Mobile Apps & UI-Design</p>
+        </div>
+      </div>
+
+      <!-- SQL -->
+      <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="400">
+        <div class="card text-center p-4 shadow-sm skill-card h-100">
+          <i class="fas fa-database fa-3x mb-3 skill-icon"></i>
+          <h5 class="fw-bold">SQL</h5>
+          <p class="text-muted">Datenbanken & Datenabfragen für Web & Apps</p>
+        </div>
+      </div>
+
+      <!-- HTML / CSS / JS -->
+      <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="500">
+        <div class="card text-center p-4 shadow-sm skill-card h-100">
+          <i class="fab fa-html5 fa-3x mb-3 skill-icon"></i>
+          <h5 class="fw-bold">HTML / CSS / JS</h5>
+          <p class="text-muted">Frontend & responsive Designs</p>
+        </div>
+      </div>
+
+      <!-- Optional: Flet / Unreal Engine / Office Basics -->
+      <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="600">
+        <div class="card text-center p-4 shadow-sm skill-card h-100">
+          <i class="fas fa-gamepad fa-3x mb-3 skill-icon"></i>
+          <h5 class="fw-bold">Unreal / Flet</h5>
+          <p class="text-muted">Spiele- & GUI-Experimente (Grundkenntnisse)</p>
+        </div>
+      </div>
+      
+      <!-- Java & Spring Boot -->
+      <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="card text-center p-4 shadow-sm skill-card h-100">
+          <i class="fab fa-java fa-3x mb-3 skill-icon"></i>
+          <h5 class="fw-bold">Java & Spring Boot</h5>
+          <p class="text-muted">Grundkenntnisse im Backend und Enterprise Apps.</p>
+        </div>
+      </div>
+
+      <!-- C# / .NET MAUI -->
+      <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="card text-center p-4 shadow-sm skill-card h-100">
+          <i class="fab fa-microsoft fa-3x mb-3 skill-icon"></i>
+          <h5 class="fw-bold">C# / .NET MAUI</h5>
+          <p class="text-muted">App-Entwicklung für Desktop & Mobile (Grundkenntnisse)</p>
+        </div>
+      </div>
+
+
+
+      <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="700">
+        <div class="card text-center p-4 shadow-sm skill-card h-100">
+          <i class="fas fa-file-alt fa-3x mb-3 skill-icon"></i>
+          <h5 class="fw-bold">Office & Tools</h5>
+          <p class="text-muted">Word, Excel, PowerPoint, Windows</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% set icon_map = {
+  "Python": "fab fa-python",
+  "Flask": "fas fa-bolt",
+  "SQL": "fas fa-database",
+  "Java": "fab fa-java",
+  "SpringBoot": "fas fa-project-diagram",
+  "HTML": "fab fa-html5",
+  "CSS": "fab fa-css3-alt",
+  "JavaScript": "fab fa-js",
+  "Flutter": "fas fa-mobile-alt",
+  "Dart": "fas fa-mobile-alt",
+  "C#": "fab fa-microsoft",
+  "MAUI": "fab fa-microsoft",
+  "Unreal": "fas fa-gamepad",
+  "Lua": "fas fa-code"
+} %}
 
 <!-- Projects Preview -->
 <section class="py-5 bg-light">
@@ -61,6 +208,19 @@
           <div class="card-body">
             <h5 class="card-title">{{ project.title }}</h5>
             <p class="card-text text-muted">{{ project.short_description }}</p>
+              {% if project.tech_stack %}
+                <div class="mb-3">
+                  {% for tech in project.tech_stack.split(',') %}
+                    {% set t = tech.strip() %}
+                    <span class="tech-badge">
+                      {% if t in icon_map %}
+                        <i class="{{ icon_map[t] }}"></i>
+                      {% endif %}
+                      {{ t }}
+                    </span>
+                  {% endfor %}
+                </div>
+              {% endif %}
             <a href="{{ url_for('projects.project_detail', project_id=project.id) }}" class="stretched-link"></a>
           </div>
         </div>
@@ -76,6 +236,8 @@
     </div>
   </div>
 </section>
+
+
 
 <!-- Contact CTA -->
 <section class="py-5 text-center">
