@@ -167,6 +167,19 @@ body {
     margin: 0 0.5rem;
 }
 
+.cursor {
+  display: inline-block;
+  width: 2px;
+  background-color: #000;
+  margin-left: 2px;
+  animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0; }
+}
+
 /* Skill Cards */
 .skill-card {
     border: none;
