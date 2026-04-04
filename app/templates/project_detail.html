@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+
+{% from "components/tech_badges.html" import render_tech_stack %}
+
 {% block content %}
 <div class="container py-5">
   <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
@@ -7,36 +10,7 @@
       <div class="col-md-7 p-5 d-flex flex-column justify-content-center">
         <h1 class="fw-bold mb-3">{{ project.title }}</h1>
 
-        {% set icon_map = {
-          "Python": "fab fa-python",
-          "Flask": "fas fa-bolt",
-          "SQL": "fas fa-database",
-          "Java": "fab fa-java",
-          "SpringBoot": "fas fa-project-diagram",
-          "HTML": "fab fa-html5",
-          "CSS": "fab fa-css3-alt",
-          "JavaScript": "fab fa-js",
-          "Flutter": "fas fa-mobile-alt",
-          "Dart": "fas fa-mobile-alt",
-          "C#": "fab fa-microsoft",
-          "MAUI": "fab fa-microsoft",
-          "Unreal": "fas fa-gamepad",
-          "Lua": "fas fa-code"
-        } %}
-
-        {% if project.tech_stack %}
-        <div class="mb-3">
-          {% for tech in project.tech_stack.split(',') %}
-            {% set t = tech.strip() %}
-            <span class="tech-badge badge bg-light text-dark me-1 shadow-sm p-2">
-              {% if t in icon_map %}
-                <i class="{{ icon_map[t] }} me-1"></i>
-              {% endif %}
-              {{ t }}
-            </span>
-          {% endfor %}
-        </div>
-        {% endif %}
+        {{ render_tech_stack(project.tech_stack) }}
 
         <!-- kurze Beschreibung (Teaser) -->
         {% if project.short_description %}

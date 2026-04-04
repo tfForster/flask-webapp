@@ -283,3 +283,25 @@ body {
 .tech-badge i {
   font-size: 0.9rem;
 }
+
+.tech-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  margin: 4px;
+  border-radius: 999px;
+  background: #f1f3f5;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.tech-badge i {
+  font-size: 1rem;
+}
+
+.tech-badge:hover {
+  transform: translateY(-2px);
+  background: #e9ecef;
+}

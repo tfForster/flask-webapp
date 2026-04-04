@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+
+{% from "components/tech_badges.html" import render_tech_stack %}
+
 {% block title %}Projekte{% endblock %}
 
 {% block content %}
@@ -23,11 +26,7 @@
             <h5 class="card-title fw-semibold mb-2">{{ project.title }}</h5>
 
             {% if project.tech_stack %}
-            <div class="mb-3">
-              {% for tech in project.tech_stack.split(',') %}
-              <span class="badge bg-secondary me-1">{{ tech.strip() }}</span>
-              {% endfor %}
-            </div>
+              {{ render_tech_stack(project.tech_stack) }}
             {% endif %}
 
             <p class="card-text text-muted flex-grow-1">

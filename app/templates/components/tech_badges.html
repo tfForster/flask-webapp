@@ -1,0 +1,45 @@
+{% macro render_tech_stack(tech_stack) %}
+
+{% set icon_map = {
+  "Python": {"icon": "fab fa-python", "color": "#3776AB"},
+  "Flask": {"icon": "fas fa-bolt", "color": "#000000"},
+  "FastAPI": {"icon": "fas fa-bolt", "color": "#009688"},
+  "SQL": {"icon": "fas fa-database", "color": "#336791"},
+  "MySQL": {"icon": "fas fa-database", "color": "#00758F"},
+  "Java": {"icon": "fab fa-java", "color": "#f89820"},
+  "SpringBoot": {"icon": "fas fa-project-diagram", "color": "#6DB33F"},
+  "HTML": {"icon": "fab fa-html5", "color": "#E34F26"},
+  "CSS": {"icon": "fab fa-css3-alt", "color": "#1572B6"},
+  "JavaScript": {"icon": "fab fa-js", "color": "#F7DF1E"},
+  "Flutter": {"icon": "fas fa-mobile-alt", "color": "#02569B"},
+  "Dart": {"icon": "fas fa-mobile-alt", "color": "#0175C2"},
+  "C#": {"icon": "fab fa-microsoft", "color": "#5C2D91"},
+  "MAUI": {"icon": "fab fa-microsoft", "color": "#512BD4"},
+  "Unreal": {"icon": "fas fa-gamepad", "color": "#313131"},
+  "Lua": {"icon": "fas fa-code", "color": "#2C2D72"},
+
+  "Git": {"icon": "fab fa-git-alt", "color": "#F05032"},
+  "GitHub": {"icon": "fab fa-github", "color": "#181717"},
+
+  "Pandas": {"icon": "fas fa-table", "color": "#150458"},
+  "Scikit-learn": {"icon": "fas fa-brain", "color": "#F7931E"},
+  "SciPy": {"icon": "fas fa-square-root-alt", "color": "#8CAAE6"},
+  "Seaborn": {"icon": "fas fa-chart-line", "color": "#4C72B0"},
+  "Tableau": {"icon": "fas fa-chart-bar", "color": "#E97627"},
+  "GCP": {"icon": "fab fa-google", "color": "#4285F4"},
+  "LlamaIndex": {"icon": "fas fa-robot", "color": "#FF6F00"}
+} %}
+
+<div class="mb-3">
+  {% for tech in tech_stack.split(',') %}
+    {% set t = tech.strip() %}
+    {% set item = icon_map.get(t, {"icon": "fas fa-code", "color": "#6c757d"}) %}
+
+    <span class="tech-badge">
+      <i class="{{ item.icon }}" style="color: {{ item.color }}"></i>
+      {{ t }}
+    </span>
+  {% endfor %}
+</div>
+
+{% endmacro %}
