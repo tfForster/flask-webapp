@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% from "components/tech_badges.html" import render_tech_stack %}
+
 {% block title %}Home - Portfolio{% endblock %}
 
 {% block content %}
@@ -10,7 +12,7 @@
       Hey, ich bin <span id="typed-name">Benno 👋</span>
       <span class="cursor">|</span>
     </h1>
-    <p>Softwareentwickler mit Fokus auf sauberes UI, funktionale Backends und praktische Lösungen.</p>
+    <p>Ich entwickle Apps und Webanwendungen und arbeite mit Daten, um praktische und smarte Lösungen zu bauen.</p>
     <a href="{{ url_for('projects.projects_page') }}" class="btn btn-primary btn-lg px-4 me-2">
       Meine Projekte
     </a>
@@ -80,9 +82,11 @@ let isDeleting = false;
       <div class="col-md-6">
         <h2 class="fw-bold mb-3">Was ich mache</h2>
         <p class="text-muted">
-          Ich entwickle moderne Webanwendungen mit Python (Flask, FastAPI) und Java (Spring Boot) –
-          mit Fokus auf Performance, Sicherheit und klare Struktur. Mein Ziel ist, Projekte zu
-          bauen, die nicht nur funktionieren, sondern sich auch gut anfühlen.
+          Ich bin ausgebildeter Fachinformatiker für Anwendungsentwicklung und beherrsche moderne Softwareentwicklung mit Python (Flask, FastAPI), Flutter und SQL. Dabei erstelle ich funktionale Backends, sauberen Code und praktische Anwendungen.
+
+          In den letzten Monaten habe ich meine Skills durch einen Data-Science-Kurs bei der WBS Coding School erweitert: Datenanalyse mit SQL & Pandas, Machine-Learning-Modelle mit scikit-learn sowie Generative AI & LLMs.  
+
+          Ich verbinde Softwareentwicklung und Data Science, um Anwendungen zu entwickeln, die sowohl technisch solide als auch datengetrieben sind.
         </p>
         <a href="{{ url_for('about.about_page') }}" class="btn btn-link p-0 mt-2">Mehr über mich →</a>
       </div>
@@ -98,102 +102,87 @@ let isDeleting = false;
 <!-- Skills / Tech Stack Section -->
 <section class="py-5 bg-light" id="skills">
   <div class="container">
-    <h2 class="fw-bold text-center mb-5">Tech Stack & Skills</h2>
+    <h2 class="fw-bold text-center mb-5" data-aos="fade-up">Tech Stack & Skills</h2>
     <div class="row g-4 justify-content-center">
       
-      <!-- Python & Flask -->
-      <div class="col-md-3 col-sm-6" data-aos="fade-up">
+      <!-- Row 1 -->
+      <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="0">
         <div class="card text-center p-4 shadow-sm skill-card h-100">
-          <i class="fab fa-python fa-3x mb-3 skill-icon"></i>
+          <i class="fab fa-python fa-3x mb-3" style="color:#3776AB;"></i>
           <h5 class="fw-bold">Python & Flask</h5>
-          <p class="text-muted">Webentwicklung, Backend-Logik & kleine Tools.</p>
+          <p class="text-muted">Webentwicklung, Backend-Logik & Data Science Basics.</p>
         </div>
       </div>
 
-      <!-- Flutter / Dart -->
-      <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="300">
+      <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="100">
         <div class="card text-center p-4 shadow-sm skill-card h-100">
-          <i class="fas fa-mobile-alt fa-3x mb-3 skill-icon"></i>
+          <i class="fas fa-mobile-alt fa-3x mb-3" style="color:#02569B;"></i>
           <h5 class="fw-bold">Flutter / Dart</h5>
           <p class="text-muted">Cross-Plattform Mobile Apps & UI-Design</p>
         </div>
       </div>
 
-      <!-- SQL -->
-      <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="400">
+      <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="200">
         <div class="card text-center p-4 shadow-sm skill-card h-100">
-          <i class="fas fa-database fa-3x mb-3 skill-icon"></i>
+          <i class="fas fa-database fa-3x mb-3" style="color:#336791;"></i>
           <h5 class="fw-bold">SQL</h5>
-          <p class="text-muted">Datenbanken & Datenabfragen für Web & Apps</p>
+          <p class="text-muted">Datenbanken, Queries & Analytics</p>
         </div>
       </div>
 
-      <!-- HTML / CSS / JS -->
-      <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="500">
+      <!-- Row 2 -->
+      <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="0">
         <div class="card text-center p-4 shadow-sm skill-card h-100">
-          <i class="fab fa-html5 fa-3x mb-3 skill-icon"></i>
+          <i class="fab fa-html5 fa-3x mb-3" style="color:#E34F26;"></i>
           <h5 class="fw-bold">HTML / CSS / JS</h5>
           <p class="text-muted">Frontend & responsive Designs</p>
         </div>
       </div>
-
-      <!-- Optional: Flet / Unreal Engine / Office Basics -->
-      <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="600">
+      
+      <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="100">
         <div class="card text-center p-4 shadow-sm skill-card h-100">
-          <i class="fas fa-gamepad fa-3x mb-3 skill-icon"></i>
+          <i class="fas fa-chart-line fa-3x mb-3" style="color:#4C72B0;"></i>
+          <h5 class="fw-bold">Data Science</h5>
+          <p class="text-muted">Pandas, ML, Datenanalyse & Visualisierung</p>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="card text-center p-4 shadow-sm skill-card h-100">
+          <i class="fab fa-git-alt fa-3x mb-3" style="color:#F05032;"></i>
+          <h5 class="fw-bold">Tools</h5>
+          <p class="text-muted">Git, GitHub, GCP & Dev-Workflow</p>
+        </div>
+      </div>
+
+      <!-- Row 3 -->
+      <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="0">
+        <div class="card text-center p-4 shadow-sm skill-card h-100">
+          <i class="fas fa-gamepad fa-3x mb-3" style="color:#313131;"></i>
           <h5 class="fw-bold">Unreal / Flet</h5>
-          <p class="text-muted">Spiele- & GUI-Experimente (Grundkenntnisse)</p>
+          <p class="text-muted">Experimente & GUI-Prototypen</p>
         </div>
       </div>
       
-      <!-- Java & Spring Boot -->
-      <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="100">
+      <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="100">
         <div class="card text-center p-4 shadow-sm skill-card h-100">
-          <i class="fab fa-java fa-3x mb-3 skill-icon"></i>
+          <i class="fab fa-java fa-3x mb-3" style="color:#f89820;"></i>
           <h5 class="fw-bold">Java & Spring Boot</h5>
-          <p class="text-muted">Grundkenntnisse im Backend und Enterprise Apps.</p>
+          <p class="text-muted">Backend & erste Enterprise-Strukturen</p>
         </div>
       </div>
 
-      <!-- C# / .NET MAUI -->
-      <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="200">
+      <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="200">
         <div class="card text-center p-4 shadow-sm skill-card h-100">
-          <i class="fab fa-microsoft fa-3x mb-3 skill-icon"></i>
+          <i class="fab fa-microsoft fa-3x mb-3" style="color:#5C2D91;"></i>
           <h5 class="fw-bold">C# / .NET MAUI</h5>
-          <p class="text-muted">App-Entwicklung für Desktop & Mobile (Grundkenntnisse)</p>
-        </div>
-      </div>
-
-
-
-      <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="700">
-        <div class="card text-center p-4 shadow-sm skill-card h-100">
-          <i class="fas fa-file-alt fa-3x mb-3 skill-icon"></i>
-          <h5 class="fw-bold">Office & Tools</h5>
-          <p class="text-muted">Word, Excel, PowerPoint, Windows</p>
+          <p class="text-muted">Desktop & Mobile Apps</p>
         </div>
       </div>
 
     </div>
   </div>
 </section>
-
-{% set icon_map = {
-  "Python": "fab fa-python",
-  "Flask": "fas fa-bolt",
-  "SQL": "fas fa-database",
-  "Java": "fab fa-java",
-  "SpringBoot": "fas fa-project-diagram",
-  "HTML": "fab fa-html5",
-  "CSS": "fab fa-css3-alt",
-  "JavaScript": "fab fa-js",
-  "Flutter": "fas fa-mobile-alt",
-  "Dart": "fas fa-mobile-alt",
-  "C#": "fab fa-microsoft",
-  "MAUI": "fab fa-microsoft",
-  "Unreal": "fas fa-gamepad",
-  "Lua": "fas fa-code"
-} %}
 
 <!-- Projects Preview -->
 <section class="py-5 bg-light">
@@ -215,19 +204,9 @@ let isDeleting = false;
           <div class="card-body">
             <h5 class="card-title">{{ project.title }}</h5>
             <p class="card-text text-muted">{{ project.short_description }}</p>
-              {% if project.tech_stack %}
-                <div class="mb-3">
-                  {% for tech in project.tech_stack.split(',') %}
-                    {% set t = tech.strip() %}
-                    <span class="tech-badge">
-                      {% if t in icon_map %}
-                        <i class="{{ icon_map[t] }}"></i>
-                      {% endif %}
-                      {{ t }}
-                    </span>
-                  {% endfor %}
-                </div>
-              {% endif %}
+            {% if project.tech_stack %}
+              {{ render_tech_stack(project.tech_stack) }}
+            {% endif %}
             <a href="{{ url_for('projects.project_detail', project_id=project.id) }}" class="stretched-link"></a>
           </div>
         </div>
