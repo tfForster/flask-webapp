@@ -1,15 +1,150 @@
-<!-- templates/about.html -->
 {% extends "base.html" %}
-
-{% block title %}Über mich{% endblock %}
-
+ 
+{% from "components/tech_badges.html" import render_tech_stack %}
+ 
+{% block title %}Über mich – Benno Klan{% endblock %}
+ 
 {% block content %}
-    <p>Ich bin Benno, 20 Jahre alt, Fachinformatiker für Anwendungsentwicklung ...</p>
-    <p>Ich interessiere mich für Webentwicklung, Java, Python und möchte meine Projekte hier präsentieren.</p>
-    <div class="card p-4 shadow-sm">
-        <img src="{{ url_for('static', filename='img/me.jpg') }}" class="rounded-circle mb-3" width="150">
-        <h3>Benno Klan</h3>
-        <p>Fachinformatiker für Anwendungsentwicklung – Web & Software Projects</p>
+ 
+{# ─── Hero ─────────────────────────────────────────────────────────────────── #}
+<section class="py-5 section-gap">
+  <div class="container" style="max-width: 760px;">
+    <div class="d-flex align-items-center gap-4 mb-4" data-aos="fade-up">
+ 
+      <div class="about-avatar rounded-circle d-flex align-items-center justify-content-center flex-shrink-0">
+        BK
+      </div>
+ 
+      <div>
+        <h1 class="fw-bold mb-1">Hey, ich bin Benno.</h1>
+        <p class="text-muted mb-0" style="max-width: 520px; line-height: 1.7;">
+          Ausgebildeter Fachinformatiker für Anwendungsentwicklung – und gerade frisch
+          in die Welt der Data Science eingetaucht. Ich bau Dinge, die funktionieren,
+          und analysiere, was dahintersteckt.
+        </p>
+      </div>
     </div>
-
+ 
+    <div class="d-flex gap-2 flex-wrap" data-aos="fade-up" data-aos-delay="100">
+      <a href="#" class="btn btn-primary px-4">CV herunterladen</a>
+      <a href="{{ url_for('contact.contact_page') }}" class="btn btn-outline-secondary px-4">Kontakt aufnehmen</a>
+    </div>
+  </div>
+</section>
+ 
+{# ─── Timeline ─────────────────────────────────────────────────────────────── #}
+<section class="py-5 bg-light">
+  <div class="container" style="max-width: 760px;">
+    <h2 class="fw-bold mb-4" data-aos="fade-up">Mein Weg</h2>
+ 
+    <div class="about-timeline" data-aos="fade-up" data-aos-delay="50">
+ 
+      <div class="about-timeline-item current">
+        <div class="about-timeline-dot"></div>
+        <div class="text-muted small mb-1">2025 – heute</div>
+        <div class="fw-semibold">Data Science Kurs · WBS Coding School</div>
+        <div class="text-muted">ML, Pandas, SQL-Analytics, Generative AI & LLMs</div>
+      </div>
+ 
+      <div class="about-timeline-item current">
+        <div class="about-timeline-dot"></div>
+        <div class="text-muted small mb-1">Sommer 2025</div>
+        <div class="fw-semibold">Ausbildung abgeschlossen – FIAE</div>
+        <div class="text-muted">Fachinformatiker Anwendungsentwicklung</div>
+      </div>
+ 
+      <div class="about-timeline-item">
+        <div class="about-timeline-dot"></div>
+        <div class="text-muted small mb-1">2022 – 2025</div>
+        <div class="fw-semibold">Ausbildung · Landhandel-Branche</div>
+        <div class="text-muted">Python, Java, Flutter, SQL, .NET – echte Projekte im Berufsalltag</div>
+      </div>
+ 
+    </div>
+  </div>
+</section>
+ 
+{# ─── Skills ───────────────────────────────────────────────────────────────── #}
+<section class="py-5 section-gap">
+  <div class="container" style="max-width: 760px;">
+    <h2 class="fw-bold mb-4" data-aos="fade-up">Was ich mitbringe</h2>
+ 
+    <div class="row g-4">
+      <div class="col-md-6" data-aos="fade-up" data-aos-delay="0">
+        <div class="card shadow-sm h-100 p-4">
+          <h5 class="fw-bold mb-3" style="color: #1d4ed8;">Development</h5>
+          {{ render_tech_stack("Python, Flask, FastAPI, Flutter, Dart, Java, Spring Boot, C#, .NET MAUI, HTML, CSS, JavaScript, SQL, Git, GCP") }}
+        </div>
+      </div>
+      <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="card shadow-sm h-100 p-4">
+          <h5 class="fw-bold mb-3" style="color: #059669;">Data Science</h5>
+          {{ render_tech_stack("Pandas, NumPy, scikit-learn, Matplotlib, SQL Analytics, Generative AI, LLMs") }}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+{# ─── Wie ich arbeite ──────────────────────────────────────────────────────── #}
+<section class="py-5 bg-light">
+  <div class="container" style="max-width: 760px;">
+    <h2 class="fw-bold mb-4" data-aos="fade-up">Wie ich arbeite</h2>
+ 
+    <div class="row g-3">
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="0">
+        <div class="card border-0 shadow-sm h-100 p-4 text-center">
+          <i class="fas fa-hammer fa-2x mb-3 text-primary"></i>
+          <p class="mb-0 text-muted" style="line-height: 1.6;">
+            Ich lerne durch echte Projekte – wenn ich etwas ausprobieren will, bau ich's einfach.
+          </p>
+        </div>
+      </div>
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="card border-0 shadow-sm h-100 p-4 text-center">
+          <i class="fas fa-code-branch fa-2x mb-3 text-primary"></i>
+          <p class="mb-0 text-muted" style="line-height: 1.6;">
+            Dev und Data Science schließen sich nicht aus – ich such aktiv die Schnittmenge.
+          </p>
+        </div>
+      </div>
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="card border-0 shadow-sm h-100 p-4 text-center">
+          <i class="fas fa-check-circle fa-2x mb-3 text-primary"></i>
+          <p class="mb-0 text-muted" style="line-height: 1.6;">
+            Sauberer, lesbarer Code ist mir genauso wichtig wie das Ergebnis dahinter.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+{# ─── Hobbies ──────────────────────────────────────────────────────────────── #}
+<section class="py-5 section-gap">
+  <div class="container" style="max-width: 760px;">
+    <h2 class="fw-bold mb-3" data-aos="fade-up">Abseits vom Code</h2>
+    <div class="card border-0 shadow-sm p-4" data-aos="fade-up" data-aos-delay="50">
+      <div class="d-flex gap-3 align-items-start">
+        <i class="fas fa-gamepad fa-2x text-muted mt-1 flex-shrink-0"></i>
+        <p class="mb-0 text-muted" style="line-height: 1.75;">
+          Gaming – und das nicht nur passiv. Ich hab mal einen eigenen FiveM-Server aufgebaut:
+          Server-Logik, Scripting, Community-Management. Das war mein erstes echtes Projekt
+          lange bevor die Ausbildung angefangen hat – und hat wahrscheinlich dazu beigetragen,
+          dass ich überhaupt in die Entwicklung gerutscht bin.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+{# ─── CTA ──────────────────────────────────────────────────────────────────── #}
+<section class="py-5 text-center bg-light">
+  <div class="container">
+    <h2 class="fw-bold mb-3">Lass uns was aufbauen</h2>
+    <p class="text-muted mb-4">Ob neue Idee, Projekt oder einfach Austausch – ich freue mich über jede Nachricht.</p>
+    <a href="{{ url_for('contact.contact_page') }}" class="btn btn-primary btn-lg px-4">Kontakt aufnehmen</a>
+  </div>
+</section>
+ 
 {% endblock %}
