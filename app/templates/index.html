@@ -51,82 +51,109 @@
   <div class="container">
     <h2 class="fw-bold text-center mb-5" data-aos="fade-up">Tech Stack & Skills</h2>
     <div class="row g-4 justify-content-center">
-      
+ 
       <!-- Row 1 -->
       <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="0">
-        <div class="card text-center p-4 shadow-sm skill-card h-100">
-          <i class="fab fa-python fa-3x mb-3" style="color:#3776AB;"></i>
-          <h5 class="fw-bold">Python & Flask</h5>
-          <p class="text-muted">Webentwicklung, Backend-Logik & Data Science Basics.</p>
-        </div>
+        <a href="{{ url_for('projects.projects_by_tech') }}?tech=Python" class="text-decoration-none text-reset">
+          <div class="card text-center p-4 shadow-sm skill-card h-100">
+            <i class="fab fa-python fa-3x mb-3" style="color:#3776AB;"></i>
+            <h5 class="fw-bold">Python & Flask</h5>
+            <p class="text-muted">Webentwicklung, Backend-Logik & Data Science Basics.</p>
+            
+          </div>
+        </a>
       </div>
-
+ 
       <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="100">
-        <div class="card text-center p-4 shadow-sm skill-card h-100">
-          <i class="fas fa-mobile-alt fa-3x mb-3" style="color:#02569B;"></i>
-          <h5 class="fw-bold">Flutter / Dart</h5>
-          <p class="text-muted">Cross-Plattform Mobile Apps & UI-Design</p>
-        </div>
+        <a href="{{ url_for('projects.projects_by_tech') }}?tech=Flutter" class="text-decoration-none text-reset">
+          <div class="card text-center p-4 shadow-sm skill-card h-100">
+            <i class="fas fa-mobile-alt fa-3x mb-3" style="color:#02569B;"></i>
+            <h5 class="fw-bold">Flutter / Dart</h5>
+            <p class="text-muted">Cross-Plattform Mobile Apps & UI-Design</p>
+            
+          </div>
+        </a>
       </div>
-
+ 
       <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="200">
-        <div class="card text-center p-4 shadow-sm skill-card h-100">
-          <i class="fas fa-database fa-3x mb-3" style="color:#336791;"></i>
-          <h5 class="fw-bold">SQL</h5>
-          <p class="text-muted">Datenbanken, Queries & Analytics</p>
-        </div>
+        <a href="{{ url_for('projects.projects_by_tech') }}?tech=SQL" class="text-decoration-none text-reset">
+          <div class="card text-center p-4 shadow-sm skill-card h-100">
+            <i class="fas fa-database fa-3x mb-3" style="color:#336791;"></i>
+            <h5 class="fw-bold">SQL</h5>
+            <p class="text-muted">Datenbanken, Queries & Analytics</p>
+            
+          </div>
+        </a>
       </div>
-
+ 
       <!-- Row 2 -->
       <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="0">
-        <div class="card text-center p-4 shadow-sm skill-card h-100">
-          <i class="fab fa-html5 fa-3x mb-3" style="color:#E34F26;"></i>
-          <h5 class="fw-bold">HTML / CSS / JS</h5>
-          <p class="text-muted">Frontend & responsive Designs</p>
-        </div>
+        <a href="{{ url_for('projects.projects_by_tech') }}?tech=HTML" class="text-decoration-none text-reset">
+          <div class="card text-center p-4 shadow-sm skill-card h-100">
+            <i class="fab fa-html5 fa-3x mb-3" style="color:#E34F26;"></i>
+            <h5 class="fw-bold">HTML / CSS / JS</h5>
+            <p class="text-muted">Frontend & responsive Designs</p>
+            
+          </div>
+        </a>
       </div>
-      
+ 
       <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="100">
-        <div class="card text-center p-4 shadow-sm skill-card h-100">
-          <i class="fas fa-chart-line fa-3x mb-3" style="color:#4C72B0;"></i>
-          <h5 class="fw-bold">Data Science</h5>
-          <p class="text-muted">Pandas, ML, Datenanalyse & Visualisierung</p>
-        </div>
+        <a href="{{ url_for('projects.projects_by_tech') }}?tech=Pandas" class="text-decoration-none text-reset">
+          <div class="card text-center p-4 shadow-sm skill-card h-100">
+            <i class="fas fa-chart-line fa-3x mb-3" style="color:#4C72B0;"></i>
+            <h5 class="fw-bold">Data Science</h5>
+            <p class="text-muted">Pandas, ML, Datenanalyse & Visualisierung</p>
+            
+          </div>
+        </a>
       </div>
-
+ 
       <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="200">
-        <div class="card text-center p-4 shadow-sm skill-card h-100">
-          <i class="fab fa-git-alt fa-3x mb-3" style="color:#F05032;"></i>
-          <h5 class="fw-bold">Tools</h5>
-          <p class="text-muted">Git, GitHub, GCP & Dev-Workflow</p>
-        </div>
+        <a href="{{ url_for('projects.projects_by_tech') }}?tech=Git" class="text-decoration-none text-reset">
+          <div class="card text-center p-4 shadow-sm skill-card h-100">
+            <i class="fab fa-git-alt fa-3x mb-3" style="color:#F05032;"></i>
+            <h5 class="fw-bold">Tools</h5>
+            <p class="text-muted">Git, GitHub, GCP & Dev-Workflow</p>
+            
+          </div>
+        </a>
       </div>
-
+ 
       <!-- Row 3 -->
       <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="0">
-        <div class="card text-center p-4 shadow-sm skill-card h-100">
-          <i class="fas fa-gamepad fa-3x mb-3" style="color:#313131;"></i>
-          <h5 class="fw-bold">Unreal / Flet</h5>
-          <p class="text-muted">Experimente & GUI-Prototypen</p>
-        </div>
+        <a href="{{ url_for('projects.projects_by_tech') }}?tech=Unreal" class="text-decoration-none text-reset">
+          <div class="card text-center p-4 shadow-sm skill-card h-100">
+            <i class="fas fa-gamepad fa-3x mb-3" style="color:#313131;"></i>
+            <h5 class="fw-bold">Unreal / Flet</h5>
+            <p class="text-muted">Experimente & GUI-Prototypen</p>
+            
+          </div>
+        </a>
       </div>
-      
+ 
       <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="100">
-        <div class="card text-center p-4 shadow-sm skill-card h-100">
-          <i class="fab fa-java fa-3x mb-3" style="color:#f89820;"></i>
-          <h5 class="fw-bold">Java & Spring Boot</h5>
-          <p class="text-muted">Backend & erste Enterprise-Strukturen</p>
-        </div>
+        <a href="{{ url_for('projects.projects_by_tech') }}?tech=Java" class="text-decoration-none text-reset">
+          <div class="card text-center p-4 shadow-sm skill-card h-100">
+            <i class="fab fa-java fa-3x mb-3" style="color:#f89820;"></i>
+            <h5 class="fw-bold">Java & Spring Boot</h5>
+            <p class="text-muted">Backend & erste Enterprise-Strukturen</p>
+            
+          </div>
+        </a>
       </div>
-
+ 
       <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="200">
-        <div class="card text-center p-4 shadow-sm skill-card h-100">
-          <i class="fab fa-microsoft fa-3x mb-3" style="color:#5C2D91;"></i>
-          <h5 class="fw-bold">C# / .NET MAUI</h5>
-          <p class="text-muted">Desktop & Mobile Apps</p>
-        </div>
+        <a href="{{ url_for('projects.projects_by_tech') }}?tech=C%23" class="text-decoration-none text-reset">
+          <div class="card text-center p-4 shadow-sm skill-card h-100">
+            <i class="fab fa-microsoft fa-3x mb-3" style="color:#5C2D91;"></i>
+            <h5 class="fw-bold">C# / .NET MAUI</h5>
+            <p class="text-muted">Desktop & Mobile Apps</p>
+            
+          </div>
+        </a>
       </div>
-
+ 
     </div>
   </div>
 </section>

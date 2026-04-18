@@ -1,20 +1,18 @@
 {% extends "base.html" %}
- 
+
 {% from "components/tech_badges.html" import render_tech_stack %}
- 
+
 {% block title %}Über mich – Benno Klan{% endblock %}
- 
+
 {% block content %}
- 
+
 {# ─── Hero ─────────────────────────────────────────────────────────────────── #}
 <section class="py-5 section-gap">
   <div class="container" style="max-width: 760px;">
     <div class="d-flex align-items-center gap-4 mb-4" data-aos="fade-up">
- 
       <div class="about-avatar rounded-circle d-flex align-items-center justify-content-center flex-shrink-0">
         BK
       </div>
- 
       <div>
         <h1 class="fw-bold mb-1">Hey, ich bin Benno.</h1>
         <p class="text-muted mb-0" style="max-width: 520px; line-height: 1.7;">
@@ -24,73 +22,67 @@
         </p>
       </div>
     </div>
- 
     <div class="d-flex gap-2 flex-wrap" data-aos="fade-up" data-aos-delay="100">
       <a href="#" class="btn btn-primary px-4">CV herunterladen</a>
       <a href="{{ url_for('contact.contact_page') }}" class="btn btn-outline-secondary px-4">Kontakt aufnehmen</a>
     </div>
   </div>
 </section>
- 
+
 {# ─── Timeline ─────────────────────────────────────────────────────────────── #}
 <section class="py-5 bg-light">
   <div class="container" style="max-width: 760px;">
     <h2 class="fw-bold mb-4" data-aos="fade-up">Mein Weg</h2>
- 
+
+    {% if events %}
     <div class="about-timeline" data-aos="fade-up" data-aos-delay="50">
- 
-      <div class="about-timeline-item current">
+      {% for event in events %}
+      <div class="about-timeline-item {{ 'current' if event.is_current else '' }}">
         <div class="about-timeline-dot"></div>
-        <div class="text-muted small mb-1">2025 – heute</div>
-        <div class="fw-semibold">Data Science Kurs · WBS Coding School</div>
-        <div class="text-muted">ML, Pandas, SQL-Analytics, Generative AI & LLMs</div>
+        <div class="text-muted small mb-1">{{ event.year }}</div>
+        <div class="fw-semibold">{{ event.title }}</div>
+        {% if event.subtitle %}
+          <div class="text-muted">{{ event.subtitle }}</div>
+        {% endif %}
       </div>
- 
-      <div class="about-timeline-item current">
-        <div class="about-timeline-dot"></div>
-        <div class="text-muted small mb-1">Sommer 2025</div>
-        <div class="fw-semibold">Ausbildung abgeschlossen – FIAE</div>
-        <div class="text-muted">Fachinformatiker Anwendungsentwicklung</div>
-      </div>
- 
-      <div class="about-timeline-item">
-        <div class="about-timeline-dot"></div>
-        <div class="text-muted small mb-1">2022 – 2025</div>
-        <div class="fw-semibold">Ausbildung · Landhandel-Branche</div>
-        <div class="text-muted">Python, Java, Flutter, SQL, .NET – echte Projekte im Berufsalltag</div>
-      </div>
- 
+      {% endfor %}
     </div>
+
+    {% else %}
+    <p class="text-muted">Noch keine Einträge vorhanden.</p>
+    {% endif %}
+
   </div>
 </section>
- 
+
 {# ─── Skills ───────────────────────────────────────────────────────────────── #}
 <section class="py-5 section-gap">
   <div class="container" style="max-width: 760px;">
-    <h2 class="fw-bold mb-4" data-aos="fade-up">Was ich mitbringe</h2>
- 
+    <h2 class="fw-bold mb-2" data-aos="fade-up">Was ich mitbringe</h2>
+    <p class="text-muted mb-4" data-aos="fade-up" data-aos-delay="50">
+      Auf einen Skill klicken um passende Projekte zu sehen.
+    </p>
     <div class="row g-4">
       <div class="col-md-6" data-aos="fade-up" data-aos-delay="0">
         <div class="card shadow-sm h-100 p-4">
           <h5 class="fw-bold mb-3" style="color: #1d4ed8;">Development</h5>
-          {{ render_tech_stack("Python, Flask, FastAPI, Flutter, Dart, Java, Spring Boot, C#, .NET MAUI, HTML, CSS, JavaScript, SQL, Git, GCP") }}
+          {{ render_tech_stack("Python, Flask, FastAPI, Flutter, Dart, Java, Spring Boot, C#, .NET MAUI, HTML, CSS, JavaScript, SQL, Git, GCP", clickable=True) }}
         </div>
       </div>
       <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
         <div class="card shadow-sm h-100 p-4">
           <h5 class="fw-bold mb-3" style="color: #059669;">Data Science</h5>
-          {{ render_tech_stack("Pandas, NumPy, scikit-learn, Matplotlib, SQL Analytics, Generative AI, LLMs") }}
+          {{ render_tech_stack("Pandas, NumPy, Scikit-learn, Matplotlib, Seaborn, Tableau, Generative AI, LLMs, SQL Analytics", clickable=True) }}
         </div>
       </div>
     </div>
   </div>
 </section>
- 
+
 {# ─── Wie ich arbeite ──────────────────────────────────────────────────────── #}
 <section class="py-5 bg-light">
   <div class="container" style="max-width: 760px;">
     <h2 class="fw-bold mb-4" data-aos="fade-up">Wie ich arbeite</h2>
- 
     <div class="row g-3">
       <div class="col-md-4" data-aos="fade-up" data-aos-delay="0">
         <div class="card border-0 shadow-sm h-100 p-4 text-center">
@@ -119,25 +111,31 @@
     </div>
   </div>
 </section>
- 
-{# ─── Hobbies ──────────────────────────────────────────────────────────────── #}
+
+{# ─── Abseits vom Code ─────────────────────────────────────────────────────── #}
 <section class="py-5 section-gap">
   <div class="container" style="max-width: 760px;">
     <h2 class="fw-bold mb-3" data-aos="fade-up">Abseits vom Code</h2>
     <div class="card border-0 shadow-sm p-4" data-aos="fade-up" data-aos-delay="50">
       <div class="d-flex gap-3 align-items-start">
         <i class="fas fa-gamepad fa-2x text-muted mt-1 flex-shrink-0"></i>
-        <p class="mb-0 text-muted" style="line-height: 1.75;">
-          Gaming – und das nicht nur passiv. Ich hab mal einen eigenen FiveM-Server aufgebaut:
-          Server-Logik, Scripting, Community-Management. Das war mein erstes echtes Projekt
-          lange bevor die Ausbildung angefangen hat – und hat wahrscheinlich dazu beigetragen,
-          dass ich überhaupt in die Entwicklung gerutscht bin.
-        </p>
+        <div>
+          <p class="mb-2 text-muted" style="line-height: 1.75;">
+            Bevor die Ausbildung angefangen hat, hab ich meinen eigenen FiveM-Server aufgebaut –
+            von der Server-Konfiguration über Lua-Scripting bis zum Community-Management.
+            Das war mein erstes echtes Projekt: ein Problem erkennen, selbst lösen, live betreiben.
+          </p>
+          <p class="mb-3 text-muted" style="line-height: 1.75;">
+            Wahrscheinlich hat das mehr zu meinem Einstieg in die Entwicklung beigetragen
+            als jedes Tutorial – weil es einfach funktionieren musste.
+          </p>
+          {{ render_tech_stack("Lua", clickable=True) }}
+        </div>
       </div>
     </div>
   </div>
 </section>
- 
+
 {# ─── CTA ──────────────────────────────────────────────────────────────────── #}
 <section class="py-5 text-center bg-light">
   <div class="container">
@@ -146,5 +144,5 @@
     <a href="{{ url_for('contact.contact_page') }}" class="btn btn-primary btn-lg px-4">Kontakt aufnehmen</a>
   </div>
 </section>
- 
+
 {% endblock %}

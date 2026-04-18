@@ -1,5 +1,5 @@
-{% macro render_tech_stack(tech_stack) %}
- 
+{% macro render_tech_stack(tech_stack, clickable=False) %}
+
 {% set icon_map = {
   "Python": {"icon": "fab fa-python", "color": "#3776AB"},
   "Flask": {"icon": "fas fa-bolt", "color": "#000000"},
@@ -19,12 +19,12 @@
   ".NET MAUI": {"icon": "fab fa-microsoft", "color": "#512BD4"},
   "Unreal": {"icon": "fas fa-gamepad", "color": "#313131"},
   "Lua": {"icon": "fas fa-code", "color": "#2C2D72"},
- 
+
   "Git": {"icon": "fab fa-git-alt", "color": "#F05032"},
   "GitHub": {"icon": "fab fa-github", "color": "#181717"},
   "GCP": {"icon": "fab fa-google", "color": "#4285F4"},
   "Docker": {"icon": "fab fa-docker", "color": "#2496ED"},
- 
+
   "Pandas": {"icon": "fas fa-table", "color": "#150458"},
   "NumPy": {"icon": "fas fa-calculator", "color": "#013243"},
   "Scikit-learn": {"icon": "fas fa-brain", "color": "#F7931E"},
@@ -44,10 +44,20 @@
     {% set t = tech.strip() %}
     {% set item = icon_map.get(t, {"icon": "fas fa-code", "color": "#6c757d"}) %}
 
-    <span class="tech-badge">
-      <i class="{{ item.icon }}" style="color: {{ item.color }}"></i>
-      {{ t }}
-    </span>
+    {% if clickable %}
+      <a href="{{ url_for('projects.projects_by_tech') }}?tech={{ t | urlencode }}"
+         class="tech-badge text-decoration-none"
+         title="Projekte mit {{ t }} ansehen">
+        <i class="{{ item.icon }}" style="color: {{ item.color }}"></i>
+        {{ t }}
+      </a>
+    {% else %}
+      <span class="tech-badge">
+        <i class="{{ item.icon }}" style="color: {{ item.color }}"></i>
+        {{ t }}
+      </span>
+    {% endif %}
+
   {% endfor %}
 </div>
 

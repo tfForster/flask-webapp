@@ -38,6 +38,7 @@ def create_app():
     migrate.init_app(app, db)
 
     from app.models import User, Project, ContactMessage
+    from app.models.timeline_event import TimelineEvent
 
     from app.models.user import User
     @login_manager.user_loader

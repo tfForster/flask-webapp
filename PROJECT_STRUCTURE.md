@@ -161,6 +161,11 @@ Endpoints:
   - Standard: neueste zuerst  
   - Rendert `projects.html`
 
+- `GET /projects/filter?tech=<technologie>` → Gefilterte Projektansicht
+  - Filtert Projekte deren `tech_stack` den `tech`-Parameter enthält (case-insensitive ilike)
+  - Rendert `projects_filtered.html` mit passendem Heading und Zurück-Button
+  - Wird von klickbaren Tech-Badges auf der About-Seite aufgerufen
+
 - `GET /projects/<project_id>` → Projekt-Detailseite  
   - Lädt ein einzelnes Projekt per ID  
   - 404 wenn nicht gefunden  
@@ -168,6 +173,11 @@ Endpoints:
 
 Besondere Logik:
 - Nutzt Session (`project_sort`) für Sortierreihenfolge
+- Tech-Filter via SQLAlchemy `ilike` – Groß/Kleinschreibung wird ignoriert
+- `C#` wird in der URL als `C%23` übergeben, Flask dekodiert automatisch
+
+Neue Templates:
+- `projects_filtered.html` – Gefilterte Projektansicht, gleiche Card-Struktur wie `projects.html`
 
 Beziehungen zu Models:
 - Project (für Übersicht und Detailanzeige)
