@@ -38,6 +38,22 @@
       </div>
     </div>
 
+    <div class="stat-card" onclick="location.href='{{ url_for('admin.admin_status') }}'">
+      <div class="icon">🟢</div>
+      <div class="info">
+        <h3>Status</h3>
+        <p>{{ status.title if status else '—' }}</p>
+      </div>
+    </div>
+
+        <div class="stat-card" onclick="location.href='{{ url_for('admin.admin_cv') }}'">
+      <div class="icon">📄</div>
+      <div class="info">
+        <h3>CV</h3>
+        <p>{{ 'Hochgeladen' if cv_exists else 'Kein CV' }}</p>
+      </div>
+    </div>
+
   </div>
 </div>
 

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}{{ 'Status bearbeiten' if entry else 'Neuer Status' }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="d-flex align-items-center gap-3 mb-4">
+    <a href="{{ url_for('admin.admin_status') }}" class="btn btn-outline-secondary btn-sm">← Zurück</a>
+    <h2 class="fw-bold mb-0">{{ 'Status bearbeiten' if entry else 'Neuer Status' }}</h2>
+  </div>
+
+  <div class="card border-0 shadow-sm p-4" style="max-width: 600px;">
+    <form method="POST">
+
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Titel</label>
+        <input type="text" name="title" class="form-control"
+               placeholder="z.B. CarMatch – Auto Recommender"
+               value="{{ entry.title if entry else '' }}" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Beschreibung <span class="text-muted fw-normal">(optional)</span></label>
+        <input type="text" name="description" class="form-control"
+               placeholder="z.B. Capstone-Projekt – ML-basierter Auto-Empfehler mit Gradio UI"
+               value="{{ entry.description if entry else '' }}">
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label fw-semibold">Tech Stack <span class="text-muted fw-normal">(kommasepariert)</span></label>
+        <input type="text" name="tech_stack" class="form-control"
+               placeholder="z.B. Python, Pandas, Scikit-learn, Gradio"
+               value="{{ entry.tech_stack if entry else '' }}">
+        <div class="form-text">Gleiche Schreibweise wie bei Projekten damit die Icons funktionieren.</div>
+      </div>
+
+      <div class="mb-4">
+        <div class="form-check">
+          <input type="checkbox" name="is_active" id="is_active" class="form-check-input"
+                 value="1" {{ 'checked' if entry and entry.is_active else '' }}>
+          <label for="is_active" class="form-check-label">
+            Aktiv anzeigen <span class="text-muted small">(nur einer kann aktiv sein – alle anderen werden deaktiviert)</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary px-4">
+          {{ 'Speichern' if entry else 'Erstellen' }}
+        </button>
+        <a href="{{ url_for('admin.admin_status') }}" class="btn btn-outline-secondary">Abbrechen</a>
+      </div>
+
+    </form>
+  </div>
+</div>
+{% endblock %}

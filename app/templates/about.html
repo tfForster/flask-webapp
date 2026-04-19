@@ -23,11 +23,34 @@
       </div>
     </div>
     <div class="d-flex gap-2 flex-wrap" data-aos="fade-up" data-aos-delay="100">
-      <a href="#" class="btn btn-primary px-4">CV herunterladen</a>
+      <a href="{{ url_for('static', filename='cv/cv.pdf') }}" target="_blank" class="btn btn-primary px-4">CV herunterladen</a>
       <a href="{{ url_for('contact.contact_page') }}" class="btn btn-outline-secondary px-4">Kontakt aufnehmen</a>
     </div>
   </div>
 </section>
+
+{# ─── Status Block ─────────────────────────────────────────────────────────── #}
+{% if status %}
+<section class="pb-4">
+  <div class="container" style="max-width: 760px;">
+    <div class="card border-0 shadow-sm p-4" data-aos="fade-up">
+      <div class="d-flex align-items-start gap-3">
+        <span class="status-live-dot flex-shrink-0 mt-1"></span>
+        <div>
+          <div class="text-muted small mb-1" style="letter-spacing: 0.05em;">Gerade</div>
+          <div class="fw-semibold mb-1">{{ status.title }}</div>
+          {% if status.description %}
+            <div class="text-muted small mb-2">{{ status.description }}</div>
+          {% endif %}
+          {% if status.tech_stack %}
+            {{ render_tech_stack(status.tech_stack) }}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
 
 {# ─── Timeline ─────────────────────────────────────────────────────────────── #}
 <section class="py-5 bg-light">
@@ -47,7 +70,6 @@
       </div>
       {% endfor %}
     </div>
-
     {% else %}
     <p class="text-muted">Noch keine Einträge vorhanden.</p>
     {% endif %}

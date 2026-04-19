@@ -19,3 +19,18 @@ def handle_image_upload():
     path = os.path.join(current_app.config["UPLOAD_FOLDER"], filename)
     image_file.save(path)
     return filename
+
+def handle_cv_upload():
+    cv_file = request.files.get("cv")
+    if not cv_file or cv_file.filename == "":
+        return None
+
+    if not cv_file.filename.lower().endswith(".pdf"):
+        return None
+
+    cv_folder = os.path.join(current_app.root_path, "static", "cv")
+    os.makedirs(cv_folder, exist_ok=True)
+
+    path = os.path.join(cv_folder, "cv.pdf")
+    cv_file.save(path)
+    return True
