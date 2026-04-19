@@ -106,6 +106,25 @@ Wichtige Felder:
 Beziehungen:
 - keine direkten Foreign Keys
 
+### TimelineEvent
+(Datei: app/models/timeline_event.py)
+ 
+Beschreibung:
+Repräsentiert einen Eintrag in der persönlichen Timeline auf der About-Seite.
+Wird im Admin verwaltet – kein Hardcoding im Template nötig.
+Neue Stationen (z.B. neuer Job) können jederzeit über den Admin hinzugefügt werden.
+ 
+Wichtige Felder:
+- id (Primary Key)
+- year (Freitext, z.B. "2025 – heute" oder "Sommer 2025")
+- title (Pflichtfeld, z.B. "Ausbildung abgeschlossen – FIAE")
+- subtitle (optional, z.B. "Fachinformatiker Anwendungsentwicklung")
+- is_current (Boolean – ob der Punkt grün dargestellt wird)
+- order (Reihenfolge, niedrigere Zahl = weiter oben)
+- created_at (automatisch)
+Beziehungen:
+- keine direkten Foreign Keys
+
 ## 4. Routes
 
 ### Auth Blueprint
@@ -207,18 +226,46 @@ Beziehungen zu Models:
 (Datei: app/routes/about.py)
 
 Beschreibung:
-Statische „Über mich“-Seite der Webapp.
+„Über mich"-Seite der Webapp. Lädt Timeline-Einträge dynamisch aus der Datenbank.
 
 Endpoints:
+ 
+- `GET /about/` → About-Seite
+  - Lädt alle TimelineEvents sortiert nach `order` (aufsteigend)
+  - Rendert `about.html` mit `events`-Liste
 
-- `GET /about/` (bzw. `/` im Blueprint) → About-Seite  
-  - Rendert `about.html`
+Besondere Logik:
+- Timeline ist nicht mehr hardcoded sondern DB-gesteuert
+- Tech-Badges auf der About-Seite sind klickbar und verlinken auf `/projects/filter?tech=<name>`
 
 Beziehungen zu Models:
-- keine
+- TimelineEvent
 
-## 8. Admin (Blueprint)
-(Datei: app/routes/admin)
+## 5. Components & Widgets
+ 
+### tech_badges.html
+(Datei: app/templates/components/tech_badges.html)
+ 
+Beschreibung:
+Wiederverwendbarer Jinja2-Macro der Tech-Stack-Badges rendert.
+Wird auf Projektseiten, der About-Seite und überall wo Tech-Stacks angezeigt werden eingebunden.
+ 
+Macro:
+- `render_tech_stack(tech_stack, clickable=False)`
+  - `tech_stack`: kommaseparierter String, z.B. "Python, Flask, SQL"
+  - `clickable=True`: Badges werden zu Links auf `/projects/filter?tech=<name>`
+  - `clickable=False` (default): Badges sind normale `<span>`-Elemente
+Besondere Logik:
+- Enthält `icon_map` mit Icons und Farben für alle bekannten Technologien
+- Unbekannte Technologien erhalten ein generisches Code-Icon
+- `clickable=True` wird nur auf der About-Seite verwendet
+Widgets-Ordner (app/templates/widgets/):
+- navbar.html → globale Navigation
+- footer.html → globaler Footer
+
+
+### 6. Admin Blueprint
+(Datei: app/routes/admin/bp.py)
 
 ### Dateien
 - `__init__.py` → initialisiert den Admin-Blueprint
@@ -227,19 +274,18 @@ Beziehungen zu Models:
 - `projects.py` → Admin-Management für Projekte (CRUD)
 - `contacts.py` → Admin-Management für Kontaktanfragen
 - `users.py` → Admin-Management für Benutzer (CRUD, Rollen)
+- `timeline.py` → Admin-Management für Timeline-Einträge (CRUD)
 - `utils.py` → Hilfsfunktionen für Admin-Bereich (z. B. Berechtigungen, Filter)
-
-### Admin Blueprint
-(Datei: app/routes/admin/bp.py)
 
 Beschreibung:
 Definiert den zentralen Admin-Blueprint (`admin_bp`) mit URL-Prefix `/admin`.  
-Alle Admin-Routen werden über diesen Blueprint registriert.
+Alle Admin-Routen hängen sich per `from .bp import admin_bp` an diesen Blueprint.
+`before_request` prüft bei jedem Admin-Request ob der User eingeloggt und Admin ist.
 
 Besondere Logik:
 - Setzt den URL-Prefix `/admin`
 - Wird in der App Factory (`app/__init__.py`) registriert
-- Dient als Sammelpunkt für alle Admin-Module (dashboard, users, projects, contacts)
+- Dient als Sammelpunkt für alle Admin-Module (dashboard, users, projects, contacts, timeline)
 
 ### Dashboard
 (Datei: app/routes/admin/dashboard.py)
@@ -250,7 +296,7 @@ Stellt die Admin-Übersicht bereit. Zeigt Kennzahlen über die Anwendung (Anzahl
 Endpoints:
 - `/admin/`  
   - Methode: GET  
-  - Funktion: Rendert das Dashboard-Template `admin/dashboard.html` mit Zählerwerten für Users, Messages und Projects.
+  - Funktion: Rendert das Dashboard-Template `admin/dashboard.html` mit Zählerwerten für Users, Messages und Projects, Timeline.
 
 - `/admin/stats`  
   - Methode: GET  
@@ -260,6 +306,31 @@ Besondere Logik:
 - Alle Routen sind `@login_required`.
 - Zählt die Einträge aus den Models: User, ContactMessage, Project.
 - Nutzt Flask-Login für Zugriffsschutz.
+
+Beziehungen zu Models:
+- User, ContactMessage, Project, TimelineEvent
+
+### Admin Timeline
+(Datei: app/routes/admin/timeline.py)
+ 
+Beschreibung:
+CRUD-Verwaltung der Timeline-Einträge die auf der About-Seite angezeigt werden.
+ 
+Endpoints:
+- `GET /admin/timeline` → Listet alle Einträge sortiert nach `order`
+  - Rendert `admin/timeline.html`
+- `GET/POST /admin/timeline/new` → Neuen Eintrag anlegen
+  - Rendert `admin/timeline_form.html`
+- `GET/POST /admin/timeline/edit/<event_id>` → Eintrag bearbeiten
+  - Rendert `admin/timeline_form.html` mit befülltem Formular
+- `POST /admin/timeline/delete/<event_id>` → Eintrag löschen
+Besondere Logik:
+- Alle Routen sind `@login_required`
+- `is_current` steuert ob der Punkt grün dargestellt wird
+- `order` steuert die Reihenfolge (niedrig = oben)
+- Flash-Nachrichten bei Erfolg/Fehler
+Beziehungen zu Models:
+- TimelineEvent
 
 ### Admin Contacts
 (Datei: app/routes/admin/contacts.py)
@@ -387,7 +458,7 @@ Besondere Logik:
 - Nutzt `secure_filename`-ähnliches Verhalten durch kontrollierte Speicherung.
 - Konfigurationsabhängig (`UPLOAD_FOLDER`, `ALLOWED_EXTENSIONS`).
 
-## Deployment Workflow
+## 7. Deployment Workflow
 
 1. Entwicklung lokal (VS Code)
 2. Änderungen committen und zu GitHub pushen
@@ -397,23 +468,27 @@ Besondere Logik:
 
 GitHub dient als zentrale Source of Truth für den Code.
 
-## Application Entry Point
+## 8. Application Entry Point
 
 - `webapp.py` → Startet die Flask-App
 - Lädt die App Factory aus `app/__init__.py`
 - Registriert Blueprints und Extensions
 
-## Templates & Static
+# Wichtig: Neue Models hier importieren damit Flask-Migrate die Tabellen kennt
+from app.models.timeline_event import TimelineEvent
+
+## 9. Templates & Static
 
 Templates:
 - `templates/` enthält alle Jinja2 Templates
 - Unterordner:
-  - `admin/` → Admin-Seiten
+  - `admin/` → Admin-Seiten (dashboard, projects, contacts, users, timeline)
   - `auth/` → Login / Register
-  - `widgets/` → wiederverwendbare Template-Komponenten
-
+  - `widgets/` → globale Layout-Komponenten (navbar, footer)
+  - `components/` → wiederverwendbare UI-Bausteine (tech_badges)
 Static:
-- `static/css` → Stylesheets
-- `static/js` → JavaScript
-- `static/img` → Bilder
-- `static/uploads` → hochgeladene Projektbilder
+- `static/css/style.css` → eigene Styles (Bootstrap wird via CDN geladen)
+- `static/css/admin.css` → Admin-spezifische Styles
+- `static/js/` → JavaScript
+- `static/img/` → statische Bilder
+- `static/uploads/` → hochgeladene Projektbilder (via Admin)
