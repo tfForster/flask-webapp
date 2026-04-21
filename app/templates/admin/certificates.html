@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Zertifikate verwalten{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0">Zertifikate & Dokumente</h2>
+    <a href="{{ url_for('admin.new_certificate') }}" class="btn btn-primary">
+      <i class="fas fa-plus me-1"></i> Neues Dokument
+    </a>
+  </div>
+
+  {% if certs %}
+  <div class="card border-0 shadow-sm">
+    <table class="table table-hover mb-0 align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Titel</th>
+          <th>Aussteller</th>
+          <th>Typ</th>
+          <th>Datum</th>
+          <th>Reihenfolge</th>
+          <th>Sichtbar</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for cert in certs %}
+        <tr>
+          <td class="fw-semibold">{{ cert.title }}</td>
+          <td class="text-muted small">{{ cert.issuer or '—' }}</td>
+          <td><span class="badge bg-secondary">{{ cert.type }}</span></td>
+          <td class="text-muted small">{{ cert.date.strftime('%d.%m.%Y') if cert.date else '—' }}</td>
+          <td class="text-muted">{{ cert.order }}</td>
+          <td>
+            {% if cert.is_public %}
+              <span class="badge bg-success">Ja</span>
+            {% else %}
+              <span class="badge bg-secondary">Nein</span>
+            {% endif %}
+          </td>
+          <td class="text-end">
+            <a href="{{ url_for('static', filename='certificates/' + cert.file) }}"
+               target="_blank" class="btn btn-sm btn-outline-secondary me-1">
+              <i class="fas fa-eye"></i>
+            </a>
+            <a href="{{ url_for('admin.edit_certificate', cert_id=cert.id) }}"
+               class="btn btn-sm btn-outline-secondary me-1">Bearbeiten</a>
+            <form action="{{ url_for('admin.delete_certificate', cert_id=cert.id) }}"
+                  method="POST" class="d-inline"
+                  onsubmit="return confirm('Zertifikat löschen?')">
+              <button type="submit" class="btn btn-sm btn-outline-danger">Löschen</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% else %}
+  <div class="text-center py-5 text-muted">
+    <i class="fas fa-file-pdf fa-3x mb-3 d-block"></i>
+    Noch keine Dokumente hochgeladen.
+  </div>
+  {% endif %}
+
+</div>
+{% endblock %}

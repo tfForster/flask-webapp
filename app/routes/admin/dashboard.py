@@ -5,6 +5,7 @@ from app.models.contact_message import ContactMessage
 from app.models.project import Project
 from app.models.timeline_event import TimelineEvent
 from app.models.current_status import CurrentStatus
+from app.models.certificate import Certificate
 from .bp import admin_bp
 import os
 
@@ -19,7 +20,8 @@ def dashboard():
         project_count=Project.query.count(),
         timeline_count=TimelineEvent.query.count(),
         status=CurrentStatus.query.filter_by(is_active=True).first(),
-        cv_exists=os.path.exists(cv_path)
+        cv_exists=os.path.exists(cv_path),
+        certificate_count=Certificate.query.count()
     )
 
 

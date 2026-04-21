@@ -46,11 +46,19 @@
       </div>
     </div>
 
-        <div class="stat-card" onclick="location.href='{{ url_for('admin.admin_cv') }}'">
+    <div class="stat-card" onclick="location.href='{{ url_for('admin.admin_cv') }}'">
       <div class="icon">📄</div>
       <div class="info">
         <h3>CV</h3>
         <p>{{ 'Hochgeladen' if cv_exists else 'Kein CV' }}</p>
+      </div>
+    </div>
+
+    <div class="stat-card" onclick="location.href='{{ url_for('admin.admin_certificates') }}'">
+      <div class="icon">🎓</div>
+      <div class="info">
+        <h3>Zertifikate</h3>
+        <p>{{ certificate_count }}</p>
       </div>
     </div>
 

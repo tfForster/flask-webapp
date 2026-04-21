@@ -40,6 +40,7 @@ def create_app():
     from app.models import User, Project, ContactMessage
     from app.models.timeline_event import TimelineEvent
     from app.models.current_status import CurrentStatus
+    from app.models.certificate import Certificate
 
     from app.models.user import User
     @login_manager.user_loader
