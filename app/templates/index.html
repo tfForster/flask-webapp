@@ -6,7 +6,7 @@
 
 {% block content %}
 <!-- Hero Section -->
-<section class="hero position-relative">
+<section class="hero position-relative" style="background-image: url('{{ url_for('static', filename='img/hero_bg.png') }}');">
   <div class="container">
     <h1>
       Hey, ich bin <span id="typed-name">Benno 👋</span>
@@ -16,9 +16,19 @@
     <a href="{{ url_for('projects.projects_page') }}" class="btn btn-primary btn-lg px-4 me-2">
       Meine Projekte
     </a>
-    <a href="{{ url_for('contact.contact_page') }}" class="btn btn-outline-secondary btn-lg px-4">
+    <a href="{{ url_for('contact.contact_page') }}" class="btn btn-outline-light btn-lg px-4">
       Kontakt aufnehmen
     </a>
+    <div class="social-icons">
+      <a href="https://github.com/tfForster" target="_blank" rel="noopener" class="social-icon-btn github">
+        <span class="social-tooltip">GitHub</span>
+        <i class="fab fa-github"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/bennoklan/" target="_blank" rel="noopener" class="social-icon-btn linkedin">
+        <span class="social-tooltip">LinkedIn</span>
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -211,4 +221,19 @@
     </a>
   </div>
 </section>
+
+<script>
+(function () {
+  var navbar = document.getElementById('main-navbar');
+  function update() {
+    if (window.scrollY > 60) {
+      navbar.classList.remove('navbar-hero');
+    } else {
+      navbar.classList.add('navbar-hero');
+    }
+  }
+  navbar.classList.add('navbar-hero');
+  window.addEventListener('scroll', update, { passive: true });
+})();
+</script>
 {% endblock %}
