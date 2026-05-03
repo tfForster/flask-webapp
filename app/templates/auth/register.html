@@ -3,14 +3,6 @@
 {% block content %}
 <h2>Registrieren</h2>
 
-{% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-    {% for category, message in messages %}
-      <div class="alert alert-{{ category }}">{{ message }}</div>
-    {% endfor %}
-  {% endif %}
-{% endwith %}
-
 <form method="POST" action="{{ url_for('auth.register') }}">
   <div class="mb-3">
     <label for="username" class="form-label">Benutzername</label>
