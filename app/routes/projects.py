@@ -6,11 +6,7 @@ projects = Blueprint('projects', __name__, url_prefix='/projects')
 
 @projects.route('/')
 def projects_page():
-    sort = session.get('project_sort', 'newest')
-    if sort == 'oldest':
-        projects = Project.query.order_by(Project.created_at.asc()).all()
-    else:
-        projects = Project.query.order_by(Project.created_at.desc()).all()
+    projects = Project.query.order_by(Project.order.asc(), Project.created_at.desc()).all()
     return render_template('projects.html', projects=projects)
 
 

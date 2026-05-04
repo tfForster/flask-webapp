@@ -294,20 +294,8 @@ body {
 /* KEIN Zoom mehr */
 .card-img-top {
   transition: none;
-}/* Card */
-.card {
-  transition: all 0.25s ease;
-}
-
-/* Cleaner Hover */
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px rgba(0,0,0,0.08);
-}
-
-/* KEIN Zoom mehr */
-.card-img-top {
-  transition: none;
+  height: 200px;
+  object-fit: cover;
 }
 
 /* Abstand unter Text */

@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, request, session, current_app
+from flask import render_template, redirect, url_for, request, session, current_app, jsonify
 from flask_login import login_required
 from app import db
 from app.models.project import Project
@@ -8,10 +8,19 @@ from .utils import handle_image_upload
 @admin_bp.route("/projects")
 @login_required
 def admin_projects():
-    sort = request.args.get("sort", "newest")
-    order = Project.id.asc() if sort == "oldest" else Project.id.desc()
-    projects = Project.query.order_by(order).all()
-    return render_template("admin/projects.html", projects=projects, sort=sort)
+    projects = Project.query.order_by(Project.order.asc(), Project.id.asc()).all()
+    return render_template("admin/projects.html", projects=projects)
+
+@admin_bp.route("/projects/reorder", methods=["POST"])
+@login_required
+def reorder_projects():
+    ids = request.get_json().get("ids", [])
+    for i, pid in enumerate(ids, start=1):
+        project = Project.query.get(int(pid))
+        if project:
+            project.order = i
+    db.session.commit()
+    return jsonify({"ok": True})
 
 @admin_bp.route("/project/new", methods=["GET", "POST"])
 @login_required

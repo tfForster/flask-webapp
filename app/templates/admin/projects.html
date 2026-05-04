@@ -1,48 +1,71 @@
 {% extends "base.html" %}
 {% block title %}Admin – Projekte{% endblock %}
 
+{% block scripts %}
+{{ super() }}
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var list = document.getElementById('project-list');
+  var saveIndicator = document.getElementById('save-indicator');
+
+  new Sortable(list, {
+    animation: 150,
+    handle: '.drag-handle',
+    onEnd: function () {
+      var ids = [...list.querySelectorAll('[data-id]')].map(el => el.dataset.id);
+      fetch('{{ url_for("admin.reorder_projects") }}', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ids: ids })
+      }).then(function () {
+        saveIndicator.classList.remove('d-none');
+        setTimeout(function () { saveIndicator.classList.add('d-none'); }, 1500);
+      });
+    }
+  });
+});
+</script>
+{% endblock %}
+
 {% block content %}
-<div class="container mt-4">
+<div class="container mt-4" style="max-width: 720px;">
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2>Projekte verwalten</h2>
+    <div class="d-flex align-items-center gap-3">
+      <h2 class="mb-0">Projekte</h2>
+      <span id="save-indicator" class="d-none text-success small fw-semibold">✓ Gespeichert</span>
+    </div>
     <a href="{{ url_for('admin.new_project') }}" class="btn btn-primary">+ Neues Projekt</a>
   </div>
 
-  <form method="post" action="{{ url_for('admin.set_project_sort') }}" class="d-inline-block mb-3">
-    <select name="sort" class="form-select form-select-sm" onchange="this.form.submit()">
-      <option value="newest" {% if session.get('project_sort', 'newest') == 'newest' %}selected{% endif %}>Neueste zuerst</option>
-      <option value="oldest" {% if session.get('project_sort') == 'oldest' %}selected{% endif %}>Älteste zuerst</option>
-    </select>
-  </form>
-
-
   {% if projects %}
-  <div class="row">
+  <p class="text-muted small mb-3">Reihenfolge per Drag & Drop anpassen – wird sofort gespeichert.</p>
+  <ul class="list-group" id="project-list">
     {% for project in projects %}
-    <div class="col-md-6 col-lg-4 mb-4">
-      <div class="card shadow-sm">
-        <div class="card-body">
-          <h5>{{ project.title }}</h5>
-          <p>{{ project.description[:100] }}{% if project.description|length > 100 %}...{% endif %}</p>
-          <small class="text-muted">{{ project.tech_stack }}</small><br>
-          <a href="{{ project.github_url }}" target="_blank" class="btn btn-outline-dark btn-sm mt-2">GitHub</a>
-          {% if project.live_url %}
-          <a href="{{ project.live_url }}" target="_blank" class="btn btn-outline-success btn-sm mt-2">Live</a>
-          {% endif %}
-          <hr>
-          <div class="d-flex justify-content-between">
-            <a href="{{ url_for('admin.edit_project', project_id=project.id) }}" class="btn btn-warning btn-sm">Bearbeiten</a>
-            <form action="{{ url_for('admin.delete_project', project_id=project.id) }}" method="POST" onsubmit="return confirm('Projekt wirklich löschen?');">
-              <button type="submit" class="btn btn-danger btn-sm">Löschen</button>
-            </form>
-          </div>
-        </div>
+    <li class="list-group-item d-flex align-items-center gap-3 py-3" data-id="{{ project.id }}">
+      <span class="drag-handle text-muted fs-5" style="cursor: grab;" title="Ziehen zum Sortieren">⠿</span>
+      <div class="flex-grow-1 overflow-hidden">
+        <div class="fw-semibold">{{ project.title }}</div>
+        <small class="text-muted">{{ project.tech_stack }}</small>
       </div>
-    </div>
+      <div class="d-flex gap-2 flex-shrink-0">
+        {% if project.github_url %}
+        <a href="{{ project.github_url }}" target="_blank" class="btn btn-outline-dark btn-sm">GitHub</a>
+        {% endif %}
+        {% if project.live_url %}
+        <a href="{{ project.live_url }}" target="_blank" class="btn btn-outline-success btn-sm">Live</a>
+        {% endif %}
+        <a href="{{ url_for('admin.edit_project', project_id=project.id) }}" class="btn btn-warning btn-sm">Bearbeiten</a>
+        <form action="{{ url_for('admin.delete_project', project_id=project.id) }}" method="POST"
+              onsubmit="return confirm('Projekt wirklich löschen?');">
+          <button type="submit" class="btn btn-danger btn-sm">Löschen</button>
+        </form>
+      </div>
+    </li>
     {% endfor %}
-  </div>
+  </ul>
   {% else %}
-  <p>Keine Projekte vorhanden.</p>
+  <p class="text-muted">Keine Projekte vorhanden.</p>
   {% endif %}
 </div>
 {% endblock %}
