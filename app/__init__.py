@@ -1,4 +1,5 @@
 import os
+import markdown as md_lib
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
@@ -62,6 +63,10 @@ def create_app():
 
     from app.routes.admin import admin_bp
     app.register_blueprint(admin_bp)
+
+    @app.template_filter('markdown')
+    def markdown_filter(text):
+        return md_lib.markdown(text or '', extensions=['nl2br'])
 
     register_error_handlers(app)
 

@@ -9,8 +9,8 @@
 {# ─── Hero ─────────────────────────────────────────────────────────────────── #}
 <section class="py-5 section-gap">
   <div class="container" style="max-width: 760px;">
-    <div class="d-flex align-items-center gap-4 mb-4" data-aos="fade-up">
-      <div class="about-avatar rounded-circle d-flex align-items-center justify-content-center flex-shrink-0">
+    <div class="d-flex flex-column flex-md-row align-items-center align-items-md-start gap-4 mb-4 text-center text-md-start" data-aos="fade-up">
+      <div class="about-avatar rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 mx-auto mx-md-0">
         BK
       </div>
       <div>
@@ -22,7 +22,7 @@
         </p>
       </div>
     </div>
-    <div class="d-flex gap-2 flex-wrap" data-aos="fade-up" data-aos-delay="100">
+    <div class="d-flex gap-2 flex-wrap justify-content-center justify-content-md-start" data-aos="fade-up" data-aos-delay="100">
       <a href="{{ url_for('static', filename='cv/cv.pdf') }}"
          target="_blank" class="btn btn-primary px-4">CV herunterladen</a>
       <a href="{{ url_for('contact.contact_page') }}" class="btn btn-outline-secondary px-4">Kontakt aufnehmen</a>

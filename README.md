@@ -1,141 +1,93 @@
 # Flask Portfolio Web App
 
-A fullstack portfolio web application built with Flask.
-It allows visitors to view projects, send contact messages, and includes an admin dashboard for managing content.
+A fullstack portfolio web application built with Flask — designed to showcase projects, skills, and background, with a fully database-driven admin dashboard for managing all content.
+
+Live: [benno-klan.com](https://benno-klan.com)
 
 ---
 
-## 🚀 Features
+## Features
 
-* 📂 Project showcase with detail pages
-* 🔐 User authentication (login & registration)
-* 🛠 Admin dashboard for managing:
+**Public-facing**
+- Hero section with background image and transparent navbar
+- Typing animation and GitHub / LinkedIn social links
+- Project showcase with detail pages and Markdown-rendered descriptions
+- Clickable tech badges that filter projects by technology
+- About page with dynamic timeline, current status, and certificates
+- Contact form with database storage
 
-  * Projects (create, edit, delete)
-  * Users (manage & roles)
-  * Contact messages
-* 📬 Contact form with database storage
-* 🖼 Image upload for projects
-* 📊 Basic admin statistics (users, messages, projects)
-
----
-
-## 🧱 Tech Stack
-
-* **Backend:** Flask, Flask-Login, SQLAlchemy
-* **Database:** MySQL (Docker)
-* **Migrations:** Flask-Migrate (Alembic)
-* **Frontend:** Jinja2, HTML, CSS
-* **Deployment:** Docker, Docker Compose, Gunicorn
-* **Version Control:** Git & GitHub
+**Admin dashboard**
+- Full CRUD for projects (with image upload and Markdown editor)
+- Timeline, current status, and certificate management
+- User management with role system (admin / user)
+- Contact message inbox
+- Dashboard with live stats
 
 ---
 
-## ⚙️ Installation & Setup (Local Development)
+## Tech Stack
 
-### 1. Clone the repository
+| Layer | Tech |
+|---|---|
+| Backend | Flask, Flask-Login, SQLAlchemy, Flask-Migrate |
+| Database | MySQL (Docker) |
+| Frontend | Jinja2, Bootstrap 5, HTML, CSS, JavaScript |
+| Editor | EasyMDE (Markdown editor for admin) |
+| Deployment | Docker, Docker Compose, Gunicorn |
+| Version Control | Git & GitHub |
+
+---
+
+## Local Setup
 
 ```bash
 git clone https://github.com/tfForster/flask-webapp.git
 cd flask-webapp
-```
-
-### 2. Install dependencies
-
-```bash
 pip install -r requirements.txt
-```
-
-### 3. Run the application
-
-```bash
 python webapp.py
 ```
 
-### 4. Open in browser
-
-```
-http://localhost:5000
-```
+Open at `http://localhost:5000`
 
 ---
 
-## 🐳 Optional: Run with Docker (Production-like)
-
-If you want to run the app in a containerized environment:
+## Docker (Production-like)
 
 ```bash
 docker compose up -d --build
-```
-
-Run migrations:
-
-```bash
 docker compose exec web flask db upgrade
 ```
 
 ---
 
-## 🚀 Deployment (VPS)
-
-The application is deployed using Docker on a VPS.
-
-### Update application:
+## Deployment (VPS)
 
 ```bash
 git pull
 docker compose up -d --build
 ```
 
-The app is accessible via the server's IP or domain.
+GitHub is the source of truth. All content (projects, timeline, status, certificates) is managed via the admin dashboard at `/admin` — no redeploy needed for content changes.
 
 ---
 
-## 🔁 Workflow
-
-1. Develop locally
-2. Push changes to GitHub
-3. Pull changes on VPS
-4. Restart containers
-
-GitHub acts as the **Source of Truth**
-
----
-
-## 🔑 Admin Access
-
-* Admin dashboard:
+## Project Structure
 
 ```
-/admin
+app/
+├── models/         # SQLAlchemy models (User, Project, ContactMessage, TimelineEvent, CurrentStatus, Certificate)
+├── routes/         # Flask Blueprints (auth, main, projects, contact, about, admin)
+├── templates/      # Jinja2 templates
+│   ├── admin/
+│   ├── auth/
+│   ├── widgets/    # navbar, footer
+│   └── components/ # tech_badges macro
+└── static/         # CSS, JS, images, uploads
 ```
 
-* Features:
-
-  * Manage projects
-  * View contact messages
-  * Manage users and roles
-
 ---
 
-## 📦 Project Structure
+## Notes
 
-The project follows a modular Flask architecture using Blueprints:
-
-* `routes/` → Application routes (auth, projects, contact, admin, etc.)
-* `models/` → Database models (User, Project, ContactMessage)
-* `templates/` → Jinja2 templates
-* `static/` → CSS, JS, images, uploads
-
----
-
-## 📌 Notes
-
-* This project is part of my learning journey in backend / fullstack development
-* Focus: clean structure, real-world features, and practical deployment
-
----
-
-## 📬 Contact
-
-If you have feedback or questions, feel free to reach out.
+- Project descriptions support Markdown — write bullet points and headings directly in the admin form
+- This project is part of my ongoing learning in backend / fullstack development and grows with every new thing I pick up

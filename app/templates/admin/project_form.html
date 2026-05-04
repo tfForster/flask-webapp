@@ -1,5 +1,22 @@
 {% extends "base.html" %}
 {% block title %}{{ 'Projekt bearbeiten' if project else 'Neues Projekt' }}{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
+<script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    new EasyMDE({
+      element: document.getElementById('description'),
+      spellChecker: false,
+      toolbar: ['bold', 'italic', '|', 'unordered-list', 'ordered-list', '|', 'preview'],
+      minHeight: '160px',
+    });
+  });
+</script>
+{% endblock %}
+
 {% block content %}
 <div class="container mt-4">
   <a href="{{ url_for('admin.admin_projects') }}" class="btn btn-outline-secondary mb-3">← Zurück</a>
