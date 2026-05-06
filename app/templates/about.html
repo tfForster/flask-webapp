@@ -82,31 +82,42 @@
   <div class="container" style="max-width: 760px;">
     <h2 class="fw-bold mb-4" data-aos="fade-up">Zertifikate & Nachweise</h2>
 
+    {% set type_icons = {'Zertifikat': '🎓', 'Ausbildung': '📋', 'Kurs': '📖'} %}
+    {% set type_colors = {'Zertifikat': '#E1F5EE', 'Ausbildung': '#E6F1FB', 'Kurs': '#EEEDFE'} %}
+
     {% set types = certificates | map(attribute='type') | unique | list %}
     {% for type in types %}
       <h6 class="text-muted text-uppercase fw-semibold mb-3" style="letter-spacing: 0.08em;"
           data-aos="fade-up">{{ type }}</h6>
-      <div class="row g-3 mb-4">
-        {% for cert in certificates if cert.type == type %}
-        <div class="col-md-6" data-aos="fade-up" data-aos-delay="50">
-          <div class="card border-0 shadow-sm p-3 d-flex flex-row align-items-center gap-3 h-100">
-            <i class="fas fa-file-pdf fa-lg text-danger flex-shrink-0"></i>
-            <div class="flex-grow-1">
-              <div class="fw-semibold">{{ cert.title }}</div>
-              <div class="text-muted small">
-                {{ cert.issuer }}{% if cert.issuer and cert.date %} · {% endif %}
-                {{ cert.date.strftime('%Y') if cert.date else '' }}
-              </div>
-            </div>
-            <a href="{{ url_for('static', filename='certificates/' + cert.file) }}"
-               target="_blank"
-               class="btn btn-sm btn-outline-secondary flex-shrink-0">
-              <i class="fas fa-eye me-1"></i> Ansehen
-            </a>
-          </div>
+
+      {% for cert in certificates if cert.type == type %}
+      <div class="cert-card-a mb-3" data-aos="fade-up" data-aos-delay="50">
+        <div class="cert-icon-circle flex-shrink-0"
+             style="background: {{ type_colors.get(cert.type, '#F3F4F6') }};">
+          {{ cert.icon if cert.icon else type_icons.get(cert.type, '📄') }}
         </div>
-        {% endfor %}
+        <div class="cert-body flex-grow-1">
+          <div class="fw-semibold mb-1">{{ cert.title }}</div>
+          <div class="text-muted small mb-2">
+            {{ cert.issuer }}{% if cert.issuer and cert.date %} · {% endif %}{{ cert.date.strftime('%Y') if cert.date else '' }}
+          </div>
+          {% if cert.tags %}
+          <div class="cert-tags">
+            {% for tag in cert.tags.split(',') %}
+              <span class="cert-tag">{{ tag.strip() }}</span>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+        <a href="{{ url_for('static', filename='certificates/' + cert.file) }}"
+           target="_blank"
+           class="btn btn-sm btn-outline-secondary flex-shrink-0 align-self-center">
+          Ansehen ↗
+        </a>
       </div>
+      {% endfor %}
+
+      {% if not loop.last %}<div class="mb-3"></div>{% endif %}
     {% endfor %}
 
   </div>

@@ -49,6 +49,8 @@ def new_certificate():
             type=request.form.get("type", "Zertifikat"),
             is_public=bool(request.form.get("is_public")),
             order=int(request.form.get("order", 0)),
+            tags=request.form.get("tags", "").strip() or None,
+            icon=request.form.get("icon", "").strip() or None,
         )
         db.session.add(cert)
         db.session.commit()
@@ -71,6 +73,8 @@ def edit_certificate(cert_id):
         cert.type = request.form.get("type", "Zertifikat")
         cert.is_public = bool(request.form.get("is_public"))
         cert.order = int(request.form.get("order", 0))
+        cert.tags = request.form.get("tags", "").strip() or None
+        cert.icon = request.form.get("icon", "").strip() or None
 
         new_file = handle_certificate_upload()
         if new_file:
