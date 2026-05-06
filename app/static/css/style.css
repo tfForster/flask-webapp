@@ -465,11 +465,6 @@ a.tech-badge:hover {
   white-space: nowrap;
 }
 
-@media (prefers-color-scheme: dark) {
-  .cert-card-a { background: #1f2937; border-color: #374151; }
-  .cert-tag { border-color: #374151; color: #9ca3af; }
-}
-
 .status-live-dot {
   width: 10px;
   height: 10px;
